@@ -23,36 +23,47 @@ class UsersTableSeeder extends Seeder
 
 
         //$primeroA=Classroom::where('name','Primero A')->first();
-
+        $count=User::all()->count();
         $user =new User();
         $user->name = 'Administrator';
+         $user->first_name="firstname";
+        $user->second_name="secondname";
         $user->email = 'admin@admin.com';
-        $user->username="t00000001";
+        $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
         $user->password = bcrypt('admin');
         $user->save();
         $user->roles()->attach($role_admin);
 
+$count=User::all()->count();
         $user =new User();
         $user->name = 'Proffesor';
         $user->email = 'teacher@teacher.com';
-        $user->username="t00000002";
+         $user->first_name="firstname";
+        $user->second_name="secondname";
+                $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
         $user->password = bcrypt('teacher');
         $user->save();
         $user->roles()->attach($role_teacher);
 
+$count=User::all()->count();
         $user =new User();
         $user->name = 'Parents';
+         $user->first_name="firstname";
+        $user->second_name="secondname";
         $user->email = 'parent@parent.com';
-        $user->username="t00000003";
+        $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
         $user->password = bcrypt('parent');
         $user->save();
         $user->roles()->attach($role_parent);
 
-for ($i=4; $i < 50; $i++) {
+for ($i=4; $i < 20; $i++) {
+    $count=User::all()->count();
         $user =new User();
         $user->name = 'Coordinators '.$i;
+         $user->first_name="firstname".$i;
+        $user->second_name="secondname".$i;
         $user->email = 'coordinator'.$i.'@coordinator.com';
-        $user->username="t0000000".$i;
+        $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
         $user->password = bcrypt('coordinator');
         $user->save();
         $user->roles()->attach($role_coordinator);

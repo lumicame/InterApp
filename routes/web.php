@@ -26,21 +26,18 @@ Route::middleware(['auth'])->group(function()
 	Route::get('/student', 'StudentController@index')->name('student.home');
 
 	/*Rutas para las paginas como administrador*/
+	
+		//Rutas para ver, agregar, editar y eliminar Coordinadores
+		Route::post('/admin/user', 'AdminController@UserSave')->name('admin.user.save');
+		Route::post('/admin/user/{id}/edit', 'AdminController@UserUpdate')->name('admin.user.update');
+		Route::post('/admin/user/{id}/delete', 'AdminController@UserDelete')->name('admin.user.delete');
+
 		//Rutas para ver, agregar, editar y eliminar Coordinadores
 		Route::get('/admin/coordinator', 'AdminController@CoordinatorIndex')->name('admin.coordinator.index');	
-		Route::post('/admin/coordinator', 'AdminController@CoordinatorSave')->name('admin.coordinator.save');
-		Route::post('/admin/coordinator', 'AdminController@CoordinatorUpdate')->name('admin.coordinator.update');
-		Route::post('/admin/coordinator', 'AdminController@CoordinatorDelete')->name('admin.coordinator.delete');
 		//Rutas para ver, agregar, editar y eliminar Docentes
 		Route::get('/admin/teacher', 'AdminController@TeacherIndex')->name('admin.teacher.index');	
-		Route::post('/admin/teacher', 'AdminController@TeacherSave')->name('admin.teacher.save');
-		Route::post('/admin/teacher', 'AdminController@TeacherUpdate')->name('admin.teacher.update');
-		Route::post('/admin/teacher', 'AdminController@TeacherDelete')->name('admin.teacher.delete');
 		//Rutas para ver, agregar, editar y eliminar Estudiantes
 		Route::get('/admin/student', 'AdminController@StudentIndex')->name('admin.student.index');	
-		Route::post('/admin/student', 'AdminController@StudentSave')->name('admin.student.save');
-		Route::post('/admin/student', 'AdminController@StudentUpdate')->name('admin.student.update');
-		Route::post('/admin/student', 'AdminController@StudentDelete')->name('admin.student.delete');
 
 });
 
