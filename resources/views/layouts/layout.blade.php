@@ -50,7 +50,7 @@ and open the template in the editor.
     <body>
         <div class="ui top fixed inverted menu" >
           
- <div class="item">
+ <div class="item" style="font-size: 18px">
     INTERAPP
   </div>
  <h4 id="title_materia" class="title_materia header item " style="margin-left:  auto">

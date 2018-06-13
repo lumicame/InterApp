@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Role;
 use App\User;
+use App\School;
 use Faker\Generator as Faker;
 
 
@@ -20,7 +21,25 @@ class UsersTableSeeder extends Seeder
         $role_parent=Role::where('name','parent')->first();
         $role_teacher=Role::where('name','teacher')->first();
         $role_coordinator=Role::where('name','coordinator')->first();
+        $super=Role::where('name','super')->first();
 
+        $school=new School();
+        $school->name="UTB";
+        $school->nit=str_random(8);
+        $school->email="utb@utb.com";
+        $school->phone="555555";
+        $school->save();
+
+        $count=User::all()->count();
+        $user =new User();
+        $user->name = 'Super Admin';
+         $user->first_name="Super";
+        $user->second_name="Admin";
+        $user->email = 'super@admin.com';
+        $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
+        $user->password = bcrypt('superadmin2018');
+        $user->save();
+        $user->roles()->attach($super);
 
         //$primeroA=Classroom::where('name','Primero A')->first();
         $count=User::all()->count();
@@ -33,6 +52,7 @@ class UsersTableSeeder extends Seeder
         $user->password = bcrypt('admin');
         $user->save();
         $user->roles()->attach($role_admin);
+        $school->users()->save($user);
 
 $count=User::all()->count();
         $user =new User();
@@ -44,6 +64,7 @@ $count=User::all()->count();
         $user->password = bcrypt('teacher');
         $user->save();
         $user->roles()->attach($role_teacher);
+        $school->users()->save($user);
 
 $count=User::all()->count();
         $user =new User();
@@ -55,8 +76,9 @@ $count=User::all()->count();
         $user->password = bcrypt('parent');
         $user->save();
         $user->roles()->attach($role_parent);
+        $school->users()->save($user);
 
-for ($i=4; $i < 20; $i++) {
+for ($i=4; $i < 40; $i++) {
     $count=User::all()->count();
         $user =new User();
         $user->name = 'Coordinators '.$i;
@@ -67,6 +89,7 @@ for ($i=4; $i < 20; $i++) {
         $user->password = bcrypt('coordinator');
         $user->save();
         $user->roles()->attach($role_coordinator);
+        $school->users()->save($user);
  }
         
         

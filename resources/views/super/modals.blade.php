@@ -1,26 +1,37 @@
-<div class="ui small modal" id="add_popup">
+<div class="ui modal" id="add_popup">
   <i class="close icon"></i>
   <div class="content">
       <form class="ui form" method="post" id="form_add">
-        <h4 class="ui dividing header">Informacion del usuario</h4>
+        <h4 class="ui dividing header">Informacion de la institución</h4>
         <div class="field">
-          <label>Nombre</label>
-          <div class="two fields">
-            <div class="field">
-              <input type="text" id="first_name_add" name="first_name_add" placeholder="Primer Nombre">
+          <label>Nombre de la institución</label>
+              <input type="text" id="name_add" name="name_add" placeholder="¿Como se llama la institución?">
             </div>
-            <div class="field">
-              <input type="text" id="second_name_add" name="second_name_add" placeholder="Segundo Nombre">
-            </div>
-          </div>
-        </div>
         <div class="field">
           <label>Correo Electronico</label>
           <div class="field">
-            <input type="email" id="email_add" name="email_add" placeholder="Correo Electronico" required="true">
+            <input type="email" id="email_add" name="email_add" placeholder="¿Cual es el correo de la institución?" required="true">
+          </div>
+        </div>
+        <div class="field">
+          <label>Telefono</label>
+          <div class="field">
+            <input type="number" id="number_add" name="number_add" placeholder="¿Cual es el telefono de la institución?" required="true">
           </div>
         </div>
 
+        <h4 class="ui dividing header">Informacion del Administrador</h4>
+        <div class="field">
+          <label>Nombre del administrador</label>
+          <div class="two fields">
+            <div class="field">
+              <input type="text" id="first_name_admin_add" placeholder="Primer nombre">
+            </div>
+            <div class="field">
+              <input type="text" id="second_name_admin_add" placeholder="Segundo nombre">
+            </div>
+          </div>
+        </div>
         <button class="ui button green right floated" style="margin-bottom: 10px" id="agregar">Agregar</button>
         </form>
       
@@ -29,7 +40,7 @@
   <!-- fin del popup -->
 
    <!-- popup para editar a un usuario -->
-<div class="ui small modal" id="edit_popup">
+<div class="ui modal" id="edit_popup">
     <i class="close icon"></i>
 
     <div class="content">
@@ -61,7 +72,7 @@
   <!-- fin del popup -->
 
   <!-- popup para eliminar a un usuario -->
-  <div class="ui mini modal" id="delete_popup">
+  <div class="ui modal" id="delete_popup">
     <i class="close icon"></i>
       <div class="content">
 

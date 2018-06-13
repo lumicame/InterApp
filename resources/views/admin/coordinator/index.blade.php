@@ -14,7 +14,7 @@
 <div class="ui segment">
  <h1 class="ui header">Coordinadores</h1>
 <div class="row" >
-  <table class="ui blue small selectable celled table" id="table_content">
+  <table class="ui blue small selectable celled table" id="table_content" >
     <thead>
       <tr >
         <th>Codigo</th>
@@ -24,6 +24,9 @@
       </tr>
     </thead>
     <tbody>
+      <divclass="infinite-scroll">
+        
+      
      @foreach($coordinators as $coordinator)
      <tr id="user{{$coordinator->id}}">
       <td class="username">{{$coordinator->username}}</td>
@@ -36,12 +39,13 @@
     </tr>
 
     @endforeach
-    
+    </div>
   </tbody>
   <tfoot>
     <tr>
-    	<th colspan="6">Total Coordinadores: <span id="count_text">{{$coordinators->count()}}</span><input type="hidden" id="count" value="{{$coordinators->count()}}"> </th>
+    	<th colspan="6">Total Coordinadores: <span id="count_text">{{$coordinators->count()}}</span></th>
     	</tr>
+      
   </tfoot>
 </table>
 </div>

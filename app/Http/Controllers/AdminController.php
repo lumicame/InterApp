@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -28,6 +29,7 @@ class AdminController extends Controller
 
             return redirect('/')->with('notification', 'Has confirmado correctamente tu correo!');
         }
+
 
     public function CoordinatorIndex(Request $request)
     {
@@ -61,23 +63,24 @@ class AdminController extends Controller
         $user= User::find($id);
         return response()->json($user);
     }
-    public function UserSave(Request $request)
+    public function UserSave(Request $data)
     {
+        $array=$data->all();
         $role_coordinator=Role::where('name','coordinator')->first();
         $role_teacher=Role::where('name','teacher')->first();
         $role_student=Role::where('name','student')->first();
-       
+        $array['pass']=str_random(8);
         $count=User::all()->count();
         $user =new User();
-        $user->name = $request->firstname." ".$request->secondname;
-        $user->first_name=$request->firstname;
-        $user->second_name=$request->secondname;
-        $user->email =$request->email;
-        $user->password = bcrypt('coordinador1234');
+        $user->name = $data->firstname." ".$data->secondname;
+        $user->first_name=$data->firstname;
+        $user->second_name=$data->secondname;
+        $user->email =$data->email;
+        $user->password = bcrypt($array['pass']);
         $user->save();
         $user->username="T".str_pad($user->id, 8, "0",STR_PAD_LEFT);
         $user->save();
-            switch ($request->tipo) {
+            switch ($data->tipo) {
                 case 'coordinator':
                    $user->roles()->attach($role_coordinator);
                     break;
@@ -91,7 +94,10 @@ class AdminController extends Controller
                     # code...
                     break;
             }
-        
+            $array['name']=$data->firstname." ".$data->secondname;
+            $array['codigo']=$user->username;
+         Mail::send('emails.confirmation_code', $array, function($message) use ($data) {
+        $message->to($data->email, $data->name)->subject('Datos para iniciar en la plataforma virtual InterApp');});
         return response()->json($user);
     }
     public function UserUpdate(Request $request, $id)

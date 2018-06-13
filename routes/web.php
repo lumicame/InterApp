@@ -11,12 +11,15 @@
 |
 */
 
-
 Route::get('/register/verify/{code}', 'AdminController@verify');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function()
-{
+{	
+
+	Route::get('/superadmin','HomeController@super');
+	Route::post('/superadmin/school','HomeController@schoolSave');
+	Route::post('/superadmin/school/{id}/delete','HomeController@schoolDelete');
 	//Rutas para las paginas de inicio de los diferentes usuarios
 	Route::get('/', 'HomeController@index');
 	Route::get('/admin', 'AdminController@index')->name('admin.home');	

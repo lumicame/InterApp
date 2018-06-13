@@ -1,4 +1,3 @@
-
 // eventos para mostrar los popups
 $(document).on('click','.ui.green.button.add',function () {
     $('#add_popup').modal("show");    
@@ -12,41 +11,47 @@ $(document).on('click','.ui.button.eliminar',function () {
     $('#id_delete').val($(this).data("id"));
     $('#delete_popup').modal("show");    
 });
-
-
 //evento para agregar un nuevo usuario
 $('#form_add').validate({
   rules: {
-    first_name_add: { required: true, minlength: 2},
-    second_name_add: { required: true, minlength: 2},
+    name_add:{required: true, minlength: 5},
+    number_add:{required: true, minlength: 7},
+    first_name_admin_add: { required: true, minlength: 2},
+    second_name_admin_add: { required: true, minlength: 2},
     email_add: { required:true, email: true}
 },
 messages: {
-    first_name_add: "Debe introducir un nombre.",
-    second_name_add: "Debe introducir un apellido.",
-    email_add : "Debe introducir un email válido."
+    name_add:"Escribe el nombre de la institucion (min:5 caracteres)",
+    number_add:"Escribe el telefono de la institucion (min:7 caracteres)",
+    first_name_admin_add: "Escribe el nombre del administrador",
+    second_name_admin_add: "Escribe el segundo nombre del administrador",
+    email_add: "Escribe un correo electronico valido"
 },
 submitHandler: function(form){
-  var tipo = $('#tipo').val();
   $.ajax({
     type: 'POST',
-    url: 'user',
+    url: 'superadmin/school',
     data: {
         '_token': $('input[name=_token]').val(),
-        'tipo':tipo,
-        'firstname': $('#first_name_add').val(),
-        'secondname':$('#second_name_add').val(),
-        'email':$('#email_add').val()
+        'name_add': $('#name_add').val(),
+        'number_add':$('#number_add').val(),
+        'first_name_admin_add':$('#first_name_admin_add').val(),
+        'second_name_admin_add':$('#second_name_admin_add').val(),
+        'email_add':$('#email_add').val()
     },success: function(data) {
 
-        $('#first_name_add').val("");
-        $('#second_name_add').val("");
+        $('#name_add').val("");
+        $('#number_add').val("");
+        $('#first_name_admin_add').val("");
+        $('#first_name_admin_add').val("");
         $('#email_add').val("");
         $('#table_content').append(
             '<tr id="user'+data.id+'">'+
-            '<td class="username">'+data.username+'</td>'+
+            '<td class="nit">'+data.nit+'</td>'+
             '<td class="name">'+data.name+'</td>'+
             '<td class="email">'+data.email+'</td>'+
+      '<td class="phone">'+data.phone+'</td>'+
+      '<td class="users">0</td>'+
             '<td><center><div class="ui small icon buttons">'+
             '<button class="ui button blue editar" data-id="'+data.id+'"><i class="edit outline icon"></i></button>'+
             '<button class="ui button red eliminar" data-id="'+data.id+'"><i class="delete icon"></i></button>'+
@@ -107,7 +112,7 @@ submitHandler: function(form){
 $('#eliminar').on('click',function () {
     $.ajax({
         type: 'POST',
-        url: 'user/'+$('#id_delete').val()+'/delete',
+        url: 'superadmin/school/'+$('#id_delete').val()+'/delete',
         data: {
             '_token': $('input[name=_token]').val()
         },success: function(data) {

@@ -10,7 +10,7 @@
 @endsection
 @section('content')
     
-          <div class="ui six stackable cards">
+          <div class="ui six doubling cards">
       
 
        @include('admin.menu')

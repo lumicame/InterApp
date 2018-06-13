@@ -4,13 +4,13 @@
     <meta charset="utf-8">
 </head>
 <body>
-    <h2>Hola {{ $name }}, gracias por registrarte en <strong>Programación y más</strong> !</h2>
-    <p>Por favor confirma tu correo electrónico.</p>
-    <p>Para ello simplemente debes hacer click en el siguiente enlace:</p>
+    <h2>Hola {{$name}}, has sido registrado en la plataforma virtual <strong>InterApp</strong> !</h2>
+     <p>Tus datos para ingresar a tu cuenta son: </p>
     <p>correo: {{$email}}</p>
-    <p>contraseña: {{$password}}
-    <a href="{{ url('/register/verify/' . $confirmation_code) }}">
-        Clic para confirmar tu email
-    </a>
+    <p>codigo: {{$codigo}}</p>
+    <p>contraseña: {{$pass}}</p>
+    <p>Puedes iniciar seción con tu correo electronico o codigo</p>
+    <a href="{{ url('/')}}">
+        Clic para entrar en a plataforma</a>
 </body>
 </html>

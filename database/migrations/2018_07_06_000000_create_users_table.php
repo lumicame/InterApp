@@ -20,9 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('second_name');
             $table->string('username',100)->unique()->nullable();
             $table->string('email',100)->unique();
-            $table->boolean('confirmed')->default(0);
-            $table->string('confirmation_code')->nullable();
             $table->string('password');
+            $table->integer('school_id')->unsigned()->nullable();
+            $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
