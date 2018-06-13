@@ -32,13 +32,17 @@ and open the template in the editor.
 
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.js"></script>
 <script src="{{asset('semantic/semantic.min.js')}}"></script>
 <script src="{{asset('semanticUiAlert/Semantic-UI-Alert.js')}}"></script>
     </head>
     <style type="text/css">
       #title_materia::before{
         background: none
-      }
+      } 
+      .error {color: red !important;
+    background-color: #91a4bf1a;
+    }
       body{height: auto;background:  rgb(245, 245, 243)}
     </style>
     @yield('StyleNav')
@@ -112,8 +116,8 @@ and open the template in the editor.
   </div>
 </div>
 
-        <div class="ui mini labeled icon vertical inverted menu fixed" style="position: absolute;">
-  <a class="item" href="{{ url('/') }}">
+        <div class="ui mini vertical menu" style="margin-left: 5px;position: fixed;">
+  <a class="item" href="{{ url('/') }}" id="title_materia">
     <i class="home icon"></i>
     Inicio
   </a>

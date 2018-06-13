@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function()
 	/*Rutas para las paginas como administrador*/
 	
 		//Rutas para ver, agregar, editar y eliminar Coordinadores
+		Route::get('/admin/user/{id}', 'AdminController@UserShow')->name('admin.user.show');
 		Route::post('/admin/user', 'AdminController@UserSave')->name('admin.user.save');
 		Route::post('/admin/user/{id}/edit', 'AdminController@UserUpdate')->name('admin.user.update');
 		Route::post('/admin/user/{id}/delete', 'AdminController@UserDelete')->name('admin.user.delete');

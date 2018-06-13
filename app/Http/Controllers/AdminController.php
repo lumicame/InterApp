@@ -32,33 +32,84 @@ class AdminController extends Controller
     public function CoordinatorIndex(Request $request)
     {
         $request->user()->authorizeRoles(['admin']);
-        $roles=Role::where('name','coordinator')->first()->users()->paginate(8);
+        $roles=Role::where('name','coordinator')->first()->users;
+
         $coordinators=$roles;
 
         return view('admin.coordinator.index', compact('coordinators')); 
     }
+    public function StudentIndex(Request $request)
+    {
+        $request->user()->authorizeRoles(['admin']);
+        $roles=Role::where('name','student')->first()->users;
+
+        $students=$roles;
+
+        return view('admin.student.index', compact('students')); 
+    }
+    public function TeacherIndex(Request $request)
+    {
+        $request->user()->authorizeRoles(['admin']);
+        $roles=Role::where('name','teacher')->first()->users;
+
+        $teachers=$roles;
+
+        return view('admin.teacher.index', compact('teachers')); 
+    }
+    public function UserShow($id)
+    {
+        $user= User::find($id);
+        return response()->json($user);
+    }
     public function UserSave(Request $request)
     {
         $role_coordinator=Role::where('name','coordinator')->first();
+        $role_teacher=Role::where('name','teacher')->first();
+        $role_student=Role::where('name','student')->first();
+       
         $count=User::all()->count();
         $user =new User();
         $user->name = $request->firstname." ".$request->secondname;
         $user->first_name=$request->firstname;
         $user->second_name=$request->secondname;
         $user->email =$request->email;
-        $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
         $user->password = bcrypt('coordinador1234');
+        $user->save();
+        $user->username="T".str_pad($user->id, 8, "0",STR_PAD_LEFT);
         $user->save();
             switch ($request->tipo) {
                 case 'coordinator':
                    $user->roles()->attach($role_coordinator);
                     break;
-                
+                case 'student':
+                   $user->roles()->attach($role_student);
+                    break;
+                case 'teacher':
+                   $user->roles()->attach($role_teacher);
+                    break;
                 default:
                     # code...
                     break;
             }
         
         return response()->json($user);
+    }
+    public function UserUpdate(Request $request, $id)
+    {
+        $user=User::find($id);
+        $user->name = $request->firstname." ".$request->secondname;
+        $user->first_name=$request->firstname;
+        $user->second_name=$request->secondname;
+        $user->email =$request->email;
+        $user->save();
+        return response()->json($user);
+           
+    }
+    public function UserDelete($id)
+    {
+        $user=User::find($id);
+        $user->delete();
+     return response()->json($user);
+          
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('title')
 <h4 id="title_materia" class="header item">
- Coordinadores
+ Docentes
      </h4>
     
 @endsection
@@ -12,7 +12,7 @@
 @section('content')
        
 <div class="ui segment">
- <h1 class="ui header">Coordinadores</h1>
+ <h1 class="ui header">Docentes</h1>
 <div class="row" >
   <table class="ui blue small selectable celled table" id="table_content">
     <thead>
@@ -24,14 +24,14 @@
       </tr>
     </thead>
     <tbody>
-     @foreach($coordinators as $coordinator)
-     <tr id="user{{$coordinator->id}}">
-      <td class="username">{{$coordinator->username}}</td>
-      <td class="name">{{$coordinator->name}}</td>
-      <td class="id">{{$coordinator->email}}</td>
+     @foreach($teachers as $user)
+     <tr id="user{{$user->id}}">
+      <td class="username">{{$user->username}}</td>
+      <td class="name">{{$user->name}}</td>
+      <td class="id">{{$user->email}}</td>
       <td><center><div class="ui small icon buttons">
-        <button class="ui button blue editar" data-id="{{$coordinator->id}}"><i class="edit outline icon"></i></button>
-        <button class="ui button red eliminar" data-id="{{$coordinator->id}}"><i class="delete icon"></i></button>
+        <button class="ui button blue editar" data-id="{{$user->id}}"><i class="edit outline icon"></i></button>
+        <button class="ui button red eliminar" data-id="{{$user->id}}"><i class="delete icon"></i></button>
       </div></center></td>
     </tr>
 
@@ -40,13 +40,14 @@
   </tbody>
   <tfoot>
     <tr>
-    	<th colspan="6">Total Coordinadores: <span id="count_text">{{$coordinators->count()}}</span><input type="hidden" id="count" value="{{$coordinators->count()}}"> </th>
-    	</tr>
+    	<th colspan="6">Total Docentes: <span id="count_text">{{$teachers->count()}}</span><input type="hidden" id="count" value="{{$teachers->count()}}"> </th>
+
+    </tr>
   </tfoot>
 </table>
 </div>
 </div>
-        <input type="hidden" id="tipo" value="coordinator">
+        <input type="hidden" id="tipo" value="teacher">
 
 <button class="circular ui icon large green fixed button add" id="" style="position: fixed;
     right: 20px;
