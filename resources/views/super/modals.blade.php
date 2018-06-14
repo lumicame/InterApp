@@ -47,24 +47,24 @@
 
       <form class="ui form" method="post" id="form_edit">
         <input type="hidden" value="" id="id_edit">
-        <h4 class="ui dividing header">Informacion del usuario</h4>
+        <h4 class="ui dividing header">Informacion de la institución</h4>
         <div class="field">
-          <label>Nombre</label>
-          <div class="two fields">
-            <div class="field">
-              <input type="text" id="first_name_edit" placeholder="Primer Nombre">
+          <label>Nombre de la institución</label>
+              <input type="text" id="name_edit" placeholder="¿Como se llama la institución?">
             </div>
-            <div class="field">
-              <input type="text" id="second_name_edit" placeholder="Segundo Nombre">
-            </div>
-          </div>
-        </div>
         <div class="field">
           <label>Correo Electronico</label>
           <div class="field">
-            <input type="email" id="email_edit" placeholder="Email">
+            <input type="email" id="email_edit" placeholder="¿Cual es el correo de la institución?" required="true">
           </div>
         </div>
+        <div class="field">
+          <label>Telefono</label>
+          <div class="field">
+            <input type="number" id="number_edit"  placeholder="¿Cual es el telefono de la institución?" required="true">
+          </div>
+        </div>
+
         <button class="ui button blue right floated" style="margin-bottom: 10px" id="editar">Editar</button>
       </form>
     </div>

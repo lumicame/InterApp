@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('title')
 <h4 id="title_materia" class="header item">
- Coordinadores
+ {{Auth::user()->school->name}}
      </h4>
     
 @endsection
@@ -24,22 +24,9 @@
       </tr>
     </thead>
     <tbody>
-      <divclass="infinite-scroll">
-        
-      
-     @foreach($coordinators as $coordinator)
-     <tr id="user{{$coordinator->id}}">
-      <td class="username">{{$coordinator->username}}</td>
-      <td class="name">{{$coordinator->name}}</td>
-      <td class="id">{{$coordinator->email}}</td>
-      <td><center><div class="ui small icon buttons">
-        <button class="ui button blue editar" data-id="{{$coordinator->id}}"><i class="edit outline icon"></i></button>
-        <button class="ui button red eliminar" data-id="{{$coordinator->id}}"><i class="delete icon"></i></button>
-      </div></center></td>
-    </tr>
-
+     @foreach($coordinators as $user)
+    @include('admin.recursos.user')
     @endforeach
-    </div>
   </tbody>
   <tfoot>
     <tr>

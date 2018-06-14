@@ -48,7 +48,6 @@
 </table>
 </div>
 </div>
-        <input type="hidden" id="tipo" value="coordinator">
 
 <button class="circular ui icon large green fixed button add" id="" style="position: fixed;
     right: 20px;

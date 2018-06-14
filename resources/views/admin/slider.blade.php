@@ -9,9 +9,9 @@
     <i class="cubes icon"></i>
     Estudiantes
   </a>
-  <a class="item" href="{{url('admin/courses')}}">
+  <a class="item" href="{{route('admin.classroom.index')}}">
     <i class="list alternate icon"></i>
-    Cursos
+    Salones
   </a>
   <a class="item" href="{{url('admin/assingcourses')}}">
     <i class="tasks icon"></i>

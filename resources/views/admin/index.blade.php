@@ -6,7 +6,7 @@
 @endsection
 @section('title')
  <i class="home icon" style="font-size: 27px"></i>
-    Inicio
+   {{Auth::user()->school->name}} 
 @endsection
 @section('content')
     

@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('username',100)->unique()->nullable();
             $table->string('email',100)->unique();
             $table->string('password');
+            $table->integer('role_id')->nullable();
+            $table->integer('classroom_id')->unsigned()->nullable();
+            $table->foreign('classroom_id')->references('id')->on('classrooms')->onDelete('cascade');
             $table->integer('school_id')->unsigned()->nullable();
             $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
             $table->rememberToken();

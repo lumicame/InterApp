@@ -80,20 +80,37 @@ class HomeController extends Controller
         $school->phone=$data->number_add;
         $school->save();
         $user =new User();
-        $user->name = $data->first_name_admin_edit." ".$data->second_name_admin_edit;
+        $user->name = $data->first_name_admin_add." ".$data->second_name_admin_add;
         $user->first_name=$data->first_name_admin_add;
         $user->second_name=$data->second_name_admin_add;
         $user->email =$data->email_add;
         $user->password = bcrypt($array['pass']);
+        $user->role_id=$role->id;
         $user->save();
         $user->username="T".str_pad($user->id, 8, "0",STR_PAD_LEFT);
         $user->save();
+        $user->roles()->attach($role);
         $school->users()->save($user);
-
             $array['name']=$data->firstname." ".$data->secondname;
             $array['codigo']=$user->username;
          Mail::send('emails.school', $array, function($message) use ($data) {
         $message->to($data->email_add, $data->name_add)->subject('Te Damos La Bienvenida A InterApp!');});
+        return response()->json($school);
+    }
+    public function schoolShow($id,Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+        $school=School::find($id);
+        return response()->json($school);
+    }
+    public function schoolUpdate(Request $data,$id)
+    {
+        $array=$data->all();
+        $school=School::find($id);
+        $school->name=$data->name_edit;
+        $school->phone=$data->number_edit;
+        $school->email=$data->email_edit;
+        $school->save();
         return response()->json($school);
     }
     public function schoolDelete($id)

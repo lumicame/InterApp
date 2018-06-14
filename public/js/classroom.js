@@ -1,5 +1,3 @@
-
-// eventos para mostrar los popups
 $(document).on('click','.ui.green.button.add',function () {
     $('#add_popup').modal("show");    
 });
@@ -17,31 +15,29 @@ $(document).on('click','.ui.button.eliminar',function () {
 //evento para agregar un nuevo usuario
 $('#form_add').validate({
   rules: {
-    first_name_add: { required: true, minlength: 2},
-    second_name_add: { required: true, minlength: 2},
-    email_add: { required:true, email: true}
+    class: { required: true, minlength: 2},
+    classroom: { required: true, minlength: 2},
+    jornada: { required:true}
 },
 messages: {
-    first_name_add: "Debe introducir un nombre.",
-    second_name_add: "Debe introducir un apellido.",
-    email_add : "Debe introducir un email válido."
+    class: "Debe introducir un nombre. (ejm: Primero A)",
+    classroom: "Debe introducir el numero del aula. (ejm: 101)",
+    jornada : "Debe introducir una jornada. (ejm: AM)"
 },
 submitHandler: function(form){
-  var tipo = $('#tipo').val();
   $.ajax({
     type: 'POST',
-    url: 'user',
+    url: 'classroom',
     data: {
         '_token': $('input[name=_token]').val(),
-        'tipo':tipo,
-        'firstname': $('#first_name_add').val(),
-        'secondname':$('#second_name_add').val(),
-        'email':$('#email_add').val()
+        'class': $('#class').val(),
+        'classroom':$('#classroom').val(),
+        'jornada':$('#jornada').val()
     },success: function(data) {
 
-        $('#first_name_add').val("");
-        $('#second_name_add').val("");
-        $('#email_add').val("");
+        $('#class').val("");
+        $('#classroom').val("");
+        $('#jornada').val("");
         $('#table_content').append(data.data);   
 
         $('#item'+data.id).addClass("positive"); 
@@ -60,28 +56,28 @@ submitHandler: function(form){
 //evento para editar a un usuario
 $('#form_edit').validate({
   rules: {
-    first_name_edit: { required: true, minlength: 2},
-    second_name_edit: { required: true, minlength: 2},
-    email_edit: { required:true, email: true}
+    class_edit: { required: true, minlength: 2},
+    classroom_edit: { required: true, minlength: 2},
+    jornada_edit: { required:true}
 },
 messages: {
-    first_name_add: "Debe introducir un nombre.",
-    second_name_add: "Debe introducir un apellido.",
-    email_add : "Debe introducir un email válido."
+    class_edit: "Debe introducir un nombre. (ejm: Primero A)",
+    classroom_edit: "Debe introducir el numero del aula. (ejm: 101)",
+    jornada_edit: "Debe introducir una jornada. (ejm: AM)"
 },
 submitHandler: function(form){
     $.ajax({
         type: 'POST',
-        url: 'user/'+$('#id_edit').val()+'/edit',
+        url: 'classroom/'+$('#id_edit').val()+'/edit',
         data: {
             '_token': $('input[name=_token]').val(),
-            'firstname': $('#first_name_edit').val(),
-            'secondname':$('#second_name_edit').val(),
-            'email':$('#email_edit').val()
+            'class_edit': $('#class_edit').val(),
+            'classroom_edit':$('#classroom_edit').val(),
+            'jornada_edit':$('#jornada_edit').val()
         },success: function(data) {
-          $('#item'+data.id+' .username').html(data.username);
-          $('#item'+data.id+' .name').html(data.name);
-          $('#item'+data.id+' .email').html(data.email);
+          $('#item'+data.id+' .class').html(data.class);
+          $('#item'+data.id+' .classroom').html(data.classroom);
+          $('#item'+data.id+' .jornada').html(data.jornada);
 
           $('#item'+data.id).addClass("warning"); 
           setTimeout(function() {
@@ -98,7 +94,7 @@ submitHandler: function(form){
 $('#eliminar').on('click',function () {
     $.ajax({
         type: 'POST',
-        url: 'user/'+$('#id_delete').val()+'/delete',
+        url: 'classroom/'+$('#id_delete').val()+'/delete',
         data: {
             '_token': $('input[name=_token]').val()
         },success: function(data) {
@@ -124,14 +120,14 @@ $('#eliminar').on('click',function () {
 function cargar(id) {
    $.ajax({
         type: 'GET',
-        url: 'user/'+id,
+        url: 'classroom/'+id,
         data: {
             '_token': $('input[name=_token]').val(),
          },success: function(data) {
                 $('#id_edit').val(data.id);
-                $('#first_name_edit').val(data.first_name);
-                $('#second_name_edit').val(data.second_name);
-                $('#email_edit').val(data.email);
+                $('#class_edit').val(data.class);
+                $('#classroom_edit').val(data.classroom);
+                $('#jornada_edit').val(data.jornada);
         },
     }); 
 }

@@ -53,7 +53,7 @@ and open the template in the editor.
  <div class="item" style="font-size: 18px">
     INTERAPP
   </div>
- <h4 id="title_materia" class="title_materia header item " style="margin-left:  auto">
+ <h4 id="title_materia" class="title_materia header item" style="margin-left:  auto">
      @yield('title')
   </h4>
   

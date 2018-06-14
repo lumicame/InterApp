@@ -37,16 +37,17 @@
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Escriba un email valido">
-                        <input class="input100" type="text" name="login" id="login" placeholder="Correo Electronico o Codigo" value="{{ old('email') }}" >
+                        <input class="input100" type="text" name="login" id="login" placeholder="Correo Electronico o Codigo" value="{{ old('email')}}" >
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
                         </span>
                         
                     </div>
-                                @if ($errors->has('email'))
+                                @if ($errors->has('email')||$errors->has('username'))
                                     <span style="color:#f3104f">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('email') }}
+                                            {{ $errors->first('username') }}</strong>
                                     </span>
                                 @endif
                     <div class="wrap-input100 validate-input" data-validate = "Escribe tu contraseña">
