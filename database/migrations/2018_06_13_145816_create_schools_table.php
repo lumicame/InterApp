@@ -16,7 +16,7 @@ class CreateSchoolsTable extends Migration
         Schema::create('schools', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('nit',10);
+            $table->string('nit',12);
             $table->string('email',100)->unique();
             $table->string('phone',15);
             $table->string('logo')->default('default.png');

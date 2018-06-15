@@ -13,10 +13,6 @@
     <i class="list alternate icon"></i>
     Salones
   </a>
-  <a class="item" href="{{url('admin/assingcourses')}}">
-    <i class="tasks icon"></i>
-    Asignar Cursos
-  </a>
   <a class="item" >
     <i class="inbox icon"></i>
     Mensajes

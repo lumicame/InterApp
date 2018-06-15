@@ -39,6 +39,7 @@ submitHandler: function(form){
         $('#classroom').val("");
         $('#jornada').val("");
         $('#table_content').append(data.data);   
+        $('#add_popup').modal("hide"); 
 
         $('#item'+data.id).addClass("positive"); 
         setTimeout(function() {

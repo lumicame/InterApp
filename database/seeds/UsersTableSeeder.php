@@ -23,17 +23,10 @@ class UsersTableSeeder extends Seeder
         $role_coordinator=Role::where('name','coordinator')->first();
         $super=Role::where('name','super')->first();
 
-        $school=new School();
-        $school->name="UTB";
-        $school->nit=str_random(8);
-        $school->email="utb@utb.com";
-        $school->phone="555555";
-        $school->save();
-
         $count=User::all()->count();
         $user =new User();
         $user->name = 'Super Admin';
-         $user->first_name="Super";
+        $user->first_name="Super";
         $user->second_name="Admin";
         $user->email = 'super@admin.com';
         $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
@@ -41,60 +34,46 @@ class UsersTableSeeder extends Seeder
         $user->save();
         $user->roles()->attach($super);
 
-        //$primeroA=Classroom::where('name','Primero A')->first();
+        for ($i=0; $i <5 ; $i++) { 
+        $school=new School();
+        $school->name=$faker->name;
+        $school->nit=str_random(12);
+        $school->email="utb".$i."@utb.com";
+        $school->phone="555555";
+        $school->save();
+
         $count=User::all()->count();
         $user =new User();
-        $user->name = 'Administrator';
-         $user->first_name="firstname";
+        $user->name = 'Administrator '.$i;
+        $user->first_name="firstname";
         $user->second_name="secondname";
-        $user->email = 'admin@admin.com';        
+        $user->email = 'admin'.$i.'@admin.com';        
         $user->role_id=$role_admin->id;
         $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
         $user->password = bcrypt('admin');
         $user->save();
         $user->roles()->attach($role_admin);
         $school->users()->save($user);
+            for ($e=0; $e <5 ; $e++) { 
+                $count=User::all()->count();
+                $user =new User();
+                $user->name = 'Proffesor '.$e;
+                $user->email = $faker->unique()->safeEmail;
+                $user->role_id=$role_teacher->id;
+                $user->first_name="firstname";
+                $user->second_name="secondname";
+                $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
+                $user->password = bcrypt('teacher');
+                $user->save();
+                $user->roles()->attach($role_teacher);
+                $school->users()->save($user);
+            }
+        }
 
-        $count=User::all()->count();
-        $user =new User();
-        $user->name = 'Proffesor';
-        $user->email = 'teacher@teacher.com';
-        $user->role_id=$role_teacher->id;
-        $user->first_name="firstname";
-        $user->second_name="secondname";
-        $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
-        $user->password = bcrypt('teacher');
-        $user->save();
-        $user->roles()->attach($role_teacher);
-        $school->users()->save($user);
+        
 
-$count=User::all()->count();
-        $user =new User();
-        $user->name = 'Parents';
-         $user->first_name="firstname";
-        $user->second_name="secondname";        
-        $user->role_id=$role_parent->id;
-        $user->email = 'parent@parent.com';
-        $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
-        $user->password = bcrypt('parent');
-        $user->save();
-        $user->roles()->attach($role_parent);
-        $school->users()->save($user);
-
-for ($i=4; $i < 5; $i++) {
-    $count=User::all()->count();
-        $user =new User();
-        $user->name = 'Coordinators '.$i;
-         $user->first_name="firstname".$i;
-                 $user->role_id=$role_coordinator->id;
-        $user->second_name="secondname".$i;
-        $user->email = 'coordinator'.$i.'@coordinator.com';
-        $user->username="T".str_pad($count, 8, "0",STR_PAD_LEFT);
-        $user->password = bcrypt('coordinator');
-        $user->save();
-        $user->roles()->attach($role_coordinator);
-        $school->users()->save($user);
- }
+        //$primeroA=Classroom::where('name','Primero A')->first();
+        
         
         
      /*   for ($i=0; $i < 10; $i++) { 

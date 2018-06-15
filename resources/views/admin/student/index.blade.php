@@ -11,44 +11,40 @@
 @endsection
 @section('content')
        
+       
+
 <div class="ui segment">
  <h1 class="ui header">Estudiantes</h1>
- 
+
 <div class="row" >
-  <table class="ui blue small selectable celled table" id="table_content">
-    <thead>
-      <tr >
-        <th>Codigo</th>
-        <th>Nombre</th>
-        <th>Correo Electronico</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-     @foreach($students as $user)
-         @include('admin.recursos.user')
-    @endforeach
-  </tbody>
-  <tfoot>
-    <tr>
-    	<th colspan="6">Total Estudiantes: <span id="count_text">{{$students->count()}}</span><input type="hidden" id="count" value="{{$students->count()}}"> </th>
-    	    </tr>
-  </tfoot>
-</table>
+  <div class="ui grid">
+
+  <div class="two wide column">
+    <div class="ui vertical fluid tabular menu">
+      @foreach($classrooms as $classroom)
+      <a class="item" data-tab="{{$classroom->id}}">
+        {{$classroom->class}}
+      </a>
+      @endforeach
+    </div>
+  </div>
+  <div class="fourteen wide stretched column">
+    @foreach($classrooms as $classroom)
+      @include('admin.student.tab')
+      @endforeach
+  </div>
+</div>
+ 
 </div>
 </div>
         <input type="hidden" id="tipo" value="student">
 
-<button class="circular ui icon large green fixed button add" id="" style="position: fixed;
-    right: 20px;
-    bottom: 50px;">
-  <i class="icon plus"></i>
-</button>
+
 <!-- popup para agregar a un usuario -->
-@include('admin.modals')
+@include('admin.student.modals')
 
 <meta name="_token" content="{{ csrf_token() }}"/>
 @endsection
 @section('script')
-<script src="{{asset('js/user.js')}}"></script>
+<script src="{{asset('js/student.js')}}"></script>
 @endsection

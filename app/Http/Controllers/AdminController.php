@@ -44,9 +44,11 @@ class AdminController extends Controller
     public function StudentIndex(Request $request)
     {
         $request->user()->authorizeRoles(['admin']);
+        $school=School::find($request->user()->school->id);
         $roles=Role::where('name','student')->first();
+        $classrooms=$school->classrooms;
         $students = User::where([['role_id', '=', $roles->id],['school_id', '=', $request->user()->school->id]])->get();
-        return view('admin.student.index', compact('students')); 
+        return view('admin.student.index', compact('classrooms')); 
     }
     public function TeacherIndex(Request $request)
     {
@@ -86,6 +88,8 @@ class AdminController extends Controller
                 case 'student':
                    $user->roles()->attach($role_student);
                    $user->role_id=$role_student->id;
+                   $classroom=Classroom::find($data->classroom_id);
+                   $classroom->users()->save($user);
                     break;
                 case 'teacher':
                    $user->roles()->attach($role_teacher);
@@ -99,10 +103,11 @@ class AdminController extends Controller
             $school->users()->save($user);
             $array['name']=$data->firstname." ".$data->secondname;
             $array['codigo']=$user->username;
+            $array['name_u']=$school->name;
             Mail::send('emails.confirmation_code', $array, function($message) use ($data) {
             $message->to($data->email, $data->name)->subject('Datos para iniciar en la plataforma virtual InterApp');});
             $view = view('admin.recursos.user')->with('user',$user)->render();
-            return response()->json(['data'=>$view]);
+            return response()->json(['data'=>$view,'id'=>"".$user->id]);
     }
     public function UserUpdate(Request $request, $id)
     {
@@ -144,7 +149,7 @@ class AdminController extends Controller
         $classroom->save();
         $school->classrooms()->save($classroom);
         $view = view('admin.classroom.classroom')->with('class',$classroom)->render();
-        return response()->json(['data'=>$view]);
+        return response()->json(['data'=>$view,'id'=>"".$classroom->id]);
     }
     public function ClassroomUpdate(Request $request,$id)
     {

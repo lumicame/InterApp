@@ -1,6 +1,7 @@
-
+ $('.menu .item').tab();
 // eventos para mostrar los popups
 $(document).on('click','.ui.green.button.add',function () {
+    $('#classroom_id').val($(this).data("id"));
     $('#add_popup').modal("show");    
 });
 $(document).on('click','.ui.button.editar',function () {
@@ -10,6 +11,7 @@ $(document).on('click','.ui.button.editar',function () {
 
 $(document).on('click','.ui.button.eliminar',function () {
     $('#id_delete').val($(this).data("id"));
+    $('#classroom_id_delete').val($(this).data("classroom_id"));
     $('#delete_popup').modal("show");    
 });
 
@@ -34,24 +36,32 @@ submitHandler: function(form){
     data: {
         '_token': $('input[name=_token]').val(),
         'tipo':tipo,
+        'classroom_id':$('#classroom_id').val(),
         'firstname': $('#first_name_add').val(),
         'secondname':$('#second_name_add').val(),
         'email':$('#email_add').val()
     },success: function(data) {
-
-        $('#first_name_add').val("");
+        $.uiAlert({
+textHead: 'Registro exitoso',
+text: 'Se ha enviado un email con los datos de ingreso a la plataforma al estudiante '+$('#first_name_add').val()+" "+$('#second_name_add').val(),
+ bgcolor: '#19c3aa',
+  textcolor: '#fff',
+   position: 'top-right',
+    icon: 'checkmark box',
+     time: 3,});
+         $('#first_name_add').val("");
         $('#second_name_add').val("");
         $('#email_add').val("");
-        $('#table_content').append(data.data);   
+        $('#table_content'+$('#classroom_id').val()).append(data.data);   
         $('#add_popup').modal("hide"); 
         $('#item'+data.id).addClass("positive"); 
         setTimeout(function() {
           $('#item'+data.id).removeClass("positive"); 
 
       },6000);          
-        var count= parseInt($('#count_text').html());
+        var count= parseInt($('#count_text'+$('#classroom_id').val()).html());
         count=count+1;
-        $('#count_text').html(count);
+        $('#count_text'+$('#classroom_id').val()).html(count);
     },
 });
 }
@@ -111,9 +121,9 @@ $('#eliminar').on('click',function () {
 
                   $('#item'+data.id).remove();
 
-                  var count= parseInt($('#count_text').html());
+                  var count= parseInt($('#count_text'+$('#classroom_id_delete').val()).html());
                   count=count-1;
-                  $('#count_text').html(""+count);
+                  $('#count_text'+$('#classroom_id_delete').val()).html(""+count);
               });
           }, 1000);
 

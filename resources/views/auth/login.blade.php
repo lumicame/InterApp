@@ -33,7 +33,7 @@
                 <form  method="POST" action="{{ route('login') }}" class="login100-form validate-form">
                     @csrf
                     <span class="login100-form-title">
-                        Bienvenido
+                        Bienvenido a INTERAPP
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate = "Escriba un email valido">
