@@ -1,11 +1,13 @@
 @extends('layouts.layout')
 
 @section('slider')
-
+@include('super.slider')
 @endsection
 @section('title')
+<h4 id="title_materia" class="header item">
  <i class="home icon" style="font-size: 27px"></i>
     Inicio
+  </h4>
 @endsection
 @section('content')
        

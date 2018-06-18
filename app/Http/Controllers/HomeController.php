@@ -70,7 +70,8 @@ class HomeController extends Controller
 
     public function schoolSave(Request $data)
     {
-       $array=$data->all();
+        $request->user()->authorizeRoles(['super']);
+        $array=$data->all();
         $role=Role::where('name','admin')->first();
         $array['pass']=str_random(8);
         $school=new School();
@@ -105,6 +106,7 @@ class HomeController extends Controller
     }
     public function schoolUpdate(Request $data,$id)
     {
+        $request->user()->authorizeRoles(['super']);
         $array=$data->all();
         $school=School::find($id);
         $school->name=$data->name_edit;
@@ -115,8 +117,17 @@ class HomeController extends Controller
     }
     public function schoolDelete($id)
     {
+        $request->user()->authorizeRoles(['super']);
         $school=School::find($id);
         $school->delete();
      return response()->json($school);
+    }
+    public function DbaIndex()
+    {
+        # code...
+    }
+    public function GradeIndex()
+    {
+        # code...
     }
 }

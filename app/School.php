@@ -15,5 +15,10 @@ class School extends Model
 	{
 		return $this->hasMany('App\Classroom');
 	}
+
+	public function subjects()
+	{
+		return $this->hasMany('App\Subject');
+	}
 	
 }

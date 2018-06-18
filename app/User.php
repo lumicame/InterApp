@@ -73,4 +73,8 @@ class User extends Authenticatable
          return $this->belongsTo('App\Classroom');
     }
 
+     public function shedules()
+    {
+         return $this->hasMany('App\Shedule');
+    }
 }

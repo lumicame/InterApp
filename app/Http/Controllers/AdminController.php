@@ -135,7 +135,7 @@ class AdminController extends Controller
     }
     public function ClassroomShow($id)
     {
-         $class= Classroom::find($id);
+        $class= Classroom::find($id);
         return response()->json($class);
     }
     public function ClassroomSave(Request $request)
@@ -153,6 +153,7 @@ class AdminController extends Controller
     }
     public function ClassroomUpdate(Request $request,$id)
     {
+        $request->user()->authorizeRoles(['admin']);
         $classroom= Classroom::find($id); 
         $classroom->class = $request->class_edit;
         $classroom->classroom=$request->classroom_edit;
@@ -162,6 +163,7 @@ class AdminController extends Controller
     }
     public function ClassroomDelete($id)
     {
+        $request->user()->authorizeRoles(['admin']);
          $class= Classroom::find($id);
          $class->delete();
         return response()->json($class);

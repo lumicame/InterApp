@@ -51,7 +51,17 @@ Route::middleware(['auth'])->group(function()
 		Route::post('/admin/classroom', 'AdminController@ClassroomSave')->name('admin.classroom.save');
 		Route::post('/admin/classroom/{id}/edit', 'AdminController@ClassroomUpdate')->name('admin.classroom.update');
 		Route::post('/admin/classroom/{id}/delete', 'AdminController@ClassroomDelete')->name('admin.classroom.delete');
-		
+
+		//Rutas como coordinador		
+		//Rutas para ver, agregar, editar y eliminar Docentes
+		Route::get('/coordinator/teacher', 'CoordinatorController@TeacherIndex')->name('coordinator.teacher.index');			
+		//Rutas para ver, agregar, editar y eliminar Estudiantes
+		Route::get('/coordinator/student', 'CoordinatorController@StudentIndex')->name('coordinator.student.index');	
+
+
+		//Rutas como profesor
+		//Rutas para ver, agregar, editar y eliminar Estudiantes
+		Route::get('/teacher/student', 'TeacherController@StudentIndex')->name('teacher.student.index');	
 
 });
 

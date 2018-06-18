@@ -14,4 +14,12 @@ class Classroom extends Model
 	{
 		return $this->hasMany('App\User');
 	}
+	public function grade()
+	{
+		return $this->hasOne('App\Grade');
+	}
+	 public function shedules()
+	{
+		return $this->hasMany('App\Shedule');
+	}
 }
