@@ -32,7 +32,7 @@
 
       <form class="ui form" method="post" id="form_edit">
         <input type="hidden" value="" id="id_edit">
-        <h4 class="ui dividing header">Informacion del usuario</h4>
+        <h4 class="ui dividing header">Informacion del salon</h4>
         <div class="field">
           <label>Datos</label>
           <div class="three fields">

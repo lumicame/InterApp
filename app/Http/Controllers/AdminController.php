@@ -6,6 +6,9 @@ use App\User;
 use App\Role;
 use App\School;
 use App\Classroom;
+use App\Subject;
+use App\Date;
+use App\Shedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -167,5 +170,54 @@ class AdminController extends Controller
          $class= Classroom::find($id);
          $class->delete();
         return response()->json($class);
+    }
+
+    public function AsingCourseIndex(Request $request)
+    {
+          $request->user()->authorizeRoles(['admin']);
+        $school=School::find($request->user()->school->id);
+        $classrooms=$school->classrooms;
+        return view('admin.asingcourse.index', compact('classrooms')); 
+    }
+    public function AsingCourseShow($id)
+    {
+        # code...
+    }
+    public function AsingCourseSave(Request $request)
+    {
+         $classroom=Classroom::find($request->classroom_id);
+        $subject=Subject::find($request->subject_id);
+        $user=User::find($request->user_id);
+        $date1=new Date();
+        $date1->star =$request->inicio.' '.$request->inicio_time;
+        $date1->end=$request->fin.' '.$request->fin_time;
+        $date1->day=$request->day;
+        $date1->save();
+        $shedule = new Shedule();
+        $shedule->subject_id=$subject->id;
+        $shedule->classroom_id=$classroom->id;
+        $shedule->user_id=$user->id;
+        $shedule->save();
+        $shedule->dates()->save($date1);
+         $view = view('admin.asingcourse.course')->with('shedule',$shedule)->render();
+        return response()->json(['data'=>$view,'id'=>"".$shedule->id]);
+    }
+    public function AsingCourseUpdate(Request $request,$id)
+    {
+        $shedule = Shedule::FindOrFail($id);
+        $date1=new Date();
+        $date1->star =$request->inicio.' '.$request->inicio_time;
+        $date1->end=$request->fin.' '.$request->fin_time;
+        $date1->day=$request->day;
+        $date1->save();
+        $shedule->dates()->save($date1);
+        $shedule->fecha=$date1->day." ".$date1->star." - ".$date1->end;
+        return response()->json($shedule); 
+    }
+    public function AsingCourseDelete($id)
+    {
+        $shedule = Shedule::FindOrFail($id);
+        $shedule->delete();
+        return response()->json($shedule);
     }
 }

@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run(Faker $faker)
     {       
-/*Supuer Usuario*/
+        /*Supuer Usuario*/
         $super=Role::where('name','super')->first();
         $count=User::all()->count();
         $user =new User();
@@ -113,21 +113,19 @@ class UsersTableSeeder extends Seeder
         $shedule->classroom_id=$classroom->id;
         $shedule->user_id=$user->id;
         $shedule->save();
-        
-
+        $shedule->dates()->save($date);
         }
 
         
 
         //$primeroA=Classroom::where('name','Primero A')->first();
-        
-        
-        
-     /*   for ($i=0; $i < 10; $i++) { 
-            $profile=new Profile();
-            $profile->name=$faker->name;
-            $profile->description=$faker->paragraph;
-            $profile->img_monster=$faker->paragraph;
+                
+        /* 
+        for ($i=0; $i < 10; $i++) { 
+        $profile=new Profile();
+        $profile->name=$faker->name;
+        $profile->description=$faker->paragraph;
+        $profile->img_monster=$faker->paragraph;
         $user =new User();
         $user->nit = str_random(10);
         $user->name = $faker->name;

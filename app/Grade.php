@@ -8,6 +8,6 @@ class Grade extends Model
 {
      public function classroom()
 	{
-		return $this->belongsTo('App\Classroom');
+		return $this->hasMany('App\Classroom');
 	}
 }

@@ -13,6 +13,10 @@
     <i class="list alternate icon"></i>
     Salones
   </a>
+  <a class="item" href="{{route('admin.asingcourse.index')}}">
+    <i class="list alternate icon"></i>
+    Asignar Cursos
+  </a>
   <a class="item" >
     <i class="inbox icon"></i>
     Mensajes

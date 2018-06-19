@@ -52,6 +52,13 @@ Route::middleware(['auth'])->group(function()
 		Route::post('/admin/classroom/{id}/edit', 'AdminController@ClassroomUpdate')->name('admin.classroom.update');
 		Route::post('/admin/classroom/{id}/delete', 'AdminController@ClassroomDelete')->name('admin.classroom.delete');
 
+		//Rutas para ver, agregar, editar y eliminar los cursos de las clases
+		Route::get('/admin/asingcourse', 'AdminController@AsingCourseIndex')->name('admin.asingcourse.index');	
+		Route::get('/admin/asingcourse/{id}', 'AdminController@AsingCourseShow')->name('admin.asingcourse.show');
+		Route::post('/admin/asingcourse', 'AdminController@AsingCourseSave')->name('admin.asingcourse.save');
+		Route::post('/admin/asingcourse/{id}/edit', 'AdminController@AsingCourseUpdate')->name('admin.asingcourse.update');
+		Route::post('/admin/asingcourse/{id}/delete', 'AdminController@AsingCourseDelete')->name('admin.asingcourse.delete');
+
 		//Rutas como coordinador		
 		//Rutas para ver, agregar, editar y eliminar Docentes
 		Route::get('/coordinator/teacher', 'CoordinatorController@TeacherIndex')->name('coordinator.teacher.index');			

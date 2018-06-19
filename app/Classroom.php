@@ -16,7 +16,7 @@ class Classroom extends Model
 	}
 	public function grade()
 	{
-		return $this->hasOne('App\Grade');
+		return $this->belongsTo('App\Grade');
 	}
 	 public function shedules()
 	{
