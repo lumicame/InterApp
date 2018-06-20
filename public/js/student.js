@@ -29,6 +29,7 @@ messages: {
     email_add : "Debe introducir un email válido."
 },
 submitHandler: function(form){
+  $('.ui.inverted.dimmer').addClass("active");
   var tipo = $('#tipo').val();
   $.ajax({
     type: 'POST',
@@ -41,18 +42,22 @@ submitHandler: function(form){
         'secondname':$('#second_name_add').val(),
         'email':$('#email_add').val()
     },success: function(data) {
-        $.uiAlert({
-textHead: 'Registro exitoso',
-text: 'Se ha enviado un email con los datos de ingreso a la plataforma al estudiante '+$('#first_name_add').val()+" "+$('#second_name_add').val(),
- bgcolor: '#19c3aa',
-  textcolor: '#fff',
-   position: 'top-right',
-    icon: 'checkmark box',
-     time: 3,});
+       
          $('#first_name_add').val("");
         $('#second_name_add').val("");
         $('#email_add').val("");
         $('#table_content'+$('#classroom_id').val()).append(data.data);   
+        $('.ui.inverted.dimmer').removeClass("active");
+         $.uiAlert({
+textHead: 'Registro exitoso',
+text: 'Se ha enviado un email con los datos de ingreso a la plataforma al usuario '+$('#first_name_add').val()+" "+$('#second_name_add').val(),
+ bgcolor: '#19c3aa',
+  textcolor: '#fff',
+   position: 'top-right',
+    icon: 'checkmark box',
+     time: 3,}); 
+                 $('.ui.inverted.dimmer').removeClass("active");
+
         $('#add_popup').modal("hide"); 
         $('#item'+data.id).addClass("positive"); 
         setTimeout(function() {
@@ -80,6 +85,8 @@ messages: {
     email_add : "Debe introducir un email válido."
 },
 submitHandler: function(form){
+      $('.ui.inverted.dimmer').addClass("active");
+
     $.ajax({
         type: 'POST',
         url: 'user/'+$('#id_edit').val()+'/edit',
@@ -98,6 +105,8 @@ submitHandler: function(form){
               $('#item'+data.id).removeClass("warning"); 
 
           },2000);          
+                  $('.ui.inverted.dimmer').removeClass("active");
+
           $('#edit_popup').modal("hide");
 
       },
@@ -106,6 +115,8 @@ submitHandler: function(form){
 });
 //evento para eliminar a un usuario
 $('#eliminar').on('click',function () {
+      $('.ui.inverted.dimmer').addClass("active");
+
     $.ajax({
         type: 'POST',
         url: 'user/'+$('#id_delete').val()+'/delete',
@@ -114,6 +125,7 @@ $('#eliminar').on('click',function () {
         },success: function(data) {
             $('#delete_popup').popup('hide all');
             $('#item'+data.id).addClass("negative");
+        $('.ui.inverted.dimmer').removeClass("active");
 
             $('#delete_popup').modal("hide");
             setTimeout(function() {

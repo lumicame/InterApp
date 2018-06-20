@@ -1,5 +1,8 @@
 <div class="ui small modal" id="add_popup">
   <i class="close icon"></i>
+  <div class="ui inverted dimmer">
+    <div class="ui large text loader">Guardando...</div>
+  </div>
   <div class="content">
       <form class="ui form" method="post" id="form_add">
         <input type="hidden" id="classroom_id" value="">
@@ -32,7 +35,9 @@
    <!-- popup para editar a un usuario -->
 <div class="ui small modal" id="edit_popup">
     <i class="close icon"></i>
-
+<div class="ui inverted dimmer">
+    <div class="ui large text loader">Guardando cambios...</div>
+  </div>
     <div class="content">
 
       <form class="ui form" method="post" id="form_edit">
@@ -64,6 +69,9 @@
   <!-- popup para eliminar a un usuario -->
   <div class="ui mini modal" id="delete_popup">
     <i class="close icon"></i>
+    <div class="ui inverted dimmer">
+    <div class="ui large text loader">Eliminando...</div>
+  </div>
       <div class="content">
 
         <div class="ui form">

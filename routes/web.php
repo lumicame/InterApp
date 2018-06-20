@@ -54,19 +54,29 @@ Route::middleware(['auth'])->group(function()
 
 		//Rutas para ver, agregar, editar y eliminar los cursos de las clases
 		Route::get('/admin/asingcourse', 'AdminController@AsingCourseIndex')->name('admin.asingcourse.index');	
-		Route::get('/admin/asingcourse/{id}', 'AdminController@AsingCourseShow')->name('admin.asingcourse.show');
 		Route::post('/admin/asingcourse', 'AdminController@AsingCourseSave')->name('admin.asingcourse.save');
 		Route::post('/admin/asingcourse/{id}/edit', 'AdminController@AsingCourseUpdate')->name('admin.asingcourse.update');
 		Route::post('/admin/asingcourse/{id}/delete', 'AdminController@AsingCourseDelete')->name('admin.asingcourse.delete');
 
-		//Rutas como coordinador		
+		//Rutas para ver, agregar, editar y eliminar los cursos de las clases
+		Route::get('/admin/subject', 'AdminController@SubjectIndex')->name('admin.subject.index');	
+		Route::get('/admin/subject/{id}', 'AdminController@SubjectShow')->name('admin.subject.show');
+		Route::post('/admin/subject', 'AdminController@SubjectSave')->name('admin.subject.save');
+		Route::post('/admin/subject/{id}/edit', 'AdminController@SubjectUpdate')->name('admin.subject.update');
+		Route::post('/admin/subject/{id}/delete', 'AdminController@SubjectDelete')->name('admin.subject.delete');
+
+	/*Rutas como coordinador*/	
+
 		//Rutas para ver, agregar, editar y eliminar Docentes
 		Route::get('/coordinator/teacher', 'CoordinatorController@TeacherIndex')->name('coordinator.teacher.index');			
 		//Rutas para ver, agregar, editar y eliminar Estudiantes
-		Route::get('/coordinator/student', 'CoordinatorController@StudentIndex')->name('coordinator.student.index');	
+		Route::get('/coordinator/student', 'CoordinatorController@StudentIndex')->name('coordinator.student.index');
+		//Rutas para ver, agregar, editar y eliminar Horarios
+		Route::get('/coordinator/asingcourse', 'CoordinatorController@AsingCourseIndex')->name('coordinator.asingcourse.index');	
 
 
-		//Rutas como profesor
+	/*Rutas como profesor*/
+
 		//Rutas para ver, agregar, editar y eliminar Estudiantes
 		Route::get('/teacher/student', 'TeacherController@StudentIndex')->name('teacher.student.index');	
 

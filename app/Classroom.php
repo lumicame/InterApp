@@ -22,4 +22,8 @@ class Classroom extends Model
 	{
 		return $this->hasMany('App\Shedule');
 	}
+	public function director()
+	{
+		return $this->belongsToMany('App\User');
+	}
 }

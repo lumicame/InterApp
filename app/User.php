@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
          return $this->hasMany('App\Shedule');
     }
+
+    public function group()
+    {
+        return $this->belongsToMany('App\Classroom');
+    }
 }

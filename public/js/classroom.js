@@ -17,14 +17,20 @@ $('#form_add').validate({
   rules: {
     class: { required: true, minlength: 2},
     classroom: { required: true, minlength: 2},
-    jornada: { required:true}
+    jornada: { required:true},
+    quota: { required:true}
 },
 messages: {
     class: "Debe introducir un nombre. (ejm: Primero A)",
     classroom: "Debe introducir el numero del aula. (ejm: 101)",
-    jornada : "Debe introducir una jornada. (ejm: AM)"
+    jornada : "Debe introducir una jornada. (ejm: AM)",
+    grade_add:"Selecciona un grado° para este salon de clases",
+    user_add:"Selecciona un director de grupo",
+    quota:"Digite un cupo maximo para este salon"
 },
 submitHandler: function(form){
+    $('.ui.inverted.dimmer').addClass("active");
+
   $.ajax({
     type: 'POST',
     url: 'classroom',
@@ -32,13 +38,21 @@ submitHandler: function(form){
         '_token': $('input[name=_token]').val(),
         'class': $('#class').val(),
         'classroom':$('#classroom').val(),
-        'jornada':$('#jornada').val()
+        'jornada':$('#jornada').val(),
+        'grade':$('#grade_add').val(),
+        'user':$('#user_add').val(),
+        'quota':$('#quota').val()
     },success: function(data) {
 
         $('#class').val("");
         $('#classroom').val("");
         $('#jornada').val("");
+        $('#grade_add').prop('selectedIndex', 0);
+        $('#user_add').prop('selectedIndex', 0);
+        $('#quota').val("");
         $('#table_content').append(data.data);   
+                $('.ui.inverted.dimmer').removeClass("active");
+
         $('#add_popup').modal("hide"); 
 
         $('#item'+data.id).addClass("positive"); 
@@ -59,14 +73,20 @@ $('#form_edit').validate({
   rules: {
     class_edit: { required: true, minlength: 2},
     classroom_edit: { required: true, minlength: 2},
-    jornada_edit: { required:true}
+    jornada_edit: { required:true},
+    quota_edit:{ required:true}
 },
 messages: {
     class_edit: "Debe introducir un nombre. (ejm: Primero A)",
     classroom_edit: "Debe introducir el numero del aula. (ejm: 101)",
-    jornada_edit: "Debe introducir una jornada. (ejm: AM)"
+    jornada_edit: "Debe introducir una jornada. (ejm: AM)",
+    grade_edit:"Selecciona un grado° para este salon de clases",
+    quota_edit:"Digite un cupo maximo para este salon"
+
 },
 submitHandler: function(form){
+    $('.ui.inverted.dimmer').addClass("active");
+
     $.ajax({
         type: 'POST',
         url: 'classroom/'+$('#id_edit').val()+'/edit',
@@ -74,11 +94,17 @@ submitHandler: function(form){
             '_token': $('input[name=_token]').val(),
             'class_edit': $('#class_edit').val(),
             'classroom_edit':$('#classroom_edit').val(),
-            'jornada_edit':$('#jornada_edit').val()
+            'jornada_edit':$('#jornada_edit').val(),
+            'grade':$('#grade_edit').val(),
+            'quota':$('#quota_edit').val()
         },success: function(data) {
           $('#item'+data.id+' .class').html(data.class);
           $('#item'+data.id+' .classroom').html(data.classroom);
           $('#item'+data.id+' .jornada').html(data.jornada);
+          $('#item'+data.id+' .grade').html(data.grade_edit);
+          $('#item'+data.id+' .quota').html(data.quota);
+        $('.ui.inverted.dimmer').removeClass("active");
+
 
           $('#item'+data.id).addClass("warning"); 
           setTimeout(function() {
@@ -93,6 +119,8 @@ submitHandler: function(form){
 });
 //evento para eliminar a un usuario
 $('#eliminar').on('click',function () {
+    $('.ui.inverted.dimmer').addClass("active");
+
     $.ajax({
         type: 'POST',
         url: 'classroom/'+$('#id_delete').val()+'/delete',
@@ -101,6 +129,7 @@ $('#eliminar').on('click',function () {
         },success: function(data) {
             $('#delete_popup').popup('hide all');
             $('#item'+data.id).addClass("negative");
+        $('.ui.inverted.dimmer').removeClass("active");
 
             $('#delete_popup').modal("hide");
             setTimeout(function() {
@@ -129,6 +158,7 @@ function cargar(id) {
                 $('#class_edit').val(data.class);
                 $('#classroom_edit').val(data.classroom);
                 $('#jornada_edit').val(data.jornada);
+                $('#quota_edit').val(data.quota);
         },
     }); 
 }

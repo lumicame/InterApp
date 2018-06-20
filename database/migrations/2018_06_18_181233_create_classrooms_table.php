@@ -17,6 +17,7 @@ class CreateClassroomsTable extends Migration
             $table->string('class');
             $table->string('classroom');
             $table->string('jornada');
+            $table->integer('quota');
             $table->integer('grade_id')->unsigned()->nullable();
             $table->foreign('grade_id')->references('id')->on('grades')->onDelete('cascade');
             $table->integer('school_id')->unsigned()->nullable();

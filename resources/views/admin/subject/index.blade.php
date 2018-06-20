@@ -15,25 +15,19 @@
 <div class="row" >
   <table class="ui blue small selectable celled table" id="table_content" >
     <thead>
-      <tr >
-        <th>Curso</th>
-        <th>Aula</th>
-        <th>Grado°</th>
-        <th>Jornada</th>
-        <th>Director de grupo</th>
-        <th>Tolal Alumnos</th>
-        <th>Total Cupos</th>
+      <tr>
+        <th>Materia</th>
         <th>Acción</th>
       </tr>
     </thead>
     <tbody>
-     @foreach($classroom as $class)
-    @include('admin.classroom.classroom')
+     @foreach($subjects as $subject)
+    @include('admin.subject.subject')
     @endforeach
   </tbody>
   <tfoot>
     <tr>
-    	<th colspan="8">Total Salones: <span id="count_text">{{$classroom->count()}}</span></th>
+    	<th colspan="6">Total Salones: <span id="count_text">{{$subjects->count()}}</span></th>
     	</tr>
       
   </tfoot>
@@ -48,10 +42,10 @@
   <i class="icon plus"></i>
 </button>
 <!-- popup para agregar a un usuario -->
-@include('admin.classroom.modals')
+@include('admin.subject.modals')
 
 <meta name="_token" content="{{ csrf_token() }}"/>
 @endsection
 @section('script')
-<script src="{{asset('js/classroom.js')}}"></script>
+<script src="{{asset('js/subject.js')}}"></script>
 @endsection

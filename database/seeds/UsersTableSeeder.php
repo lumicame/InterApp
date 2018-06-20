@@ -95,8 +95,10 @@ class UsersTableSeeder extends Seeder
         $classroom->classroom = 'Aula 101';
         $classroom->jornada = 'AM';
         $classroom->grade_id=$grade->id;
+        $classroom->quota=30;
         $classroom->save();
         $school->classrooms()->save($classroom);
+        $classroom->director()->attach($user);
         $subject=new Subject();
         $subject->name="Matematicas";
         $subject->save();

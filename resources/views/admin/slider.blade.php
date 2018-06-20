@@ -6,22 +6,20 @@
   </a>
 
  <a class="item" href="{{route('admin.student.index')}}" >
-    <i class="cubes icon"></i>
     Estudiantes
   </a>
   <a class="item" href="{{route('admin.classroom.index')}}">
-    <i class="list alternate icon"></i>
     Salones
   </a>
+  <a class="item" href="{{route('admin.subject.index')}}">
+    Materias
+  </a>
   <a class="item" href="{{route('admin.asingcourse.index')}}">
-    <i class="list alternate icon"></i>
-    Asignar Cursos
+    Horarios
   </a>
   <a class="item" >
-    <i class="inbox icon"></i>
     Mensajes
   </a>
   <a class="item" >
-    <i class="cog icon"></i>
     Configuración
   </a>

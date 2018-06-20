@@ -34,6 +34,8 @@ messages: {
     user_add: "Selecciona un docente.",
 },
 submitHandler: function(form){
+    $('.ui.inverted.dimmer').addClass("active");
+
   $.ajax({
     type: 'POST',
     url: 'asingcourse',
@@ -57,6 +59,8 @@ submitHandler: function(form){
           $('#fin_time_add').prop('selectedIndex', 0);
           $('#user_add').prop('selectedIndex', 0);
         $('#table_content'+$('#classroom_add').val()).append(data.data);   
+                $('.ui.inverted.dimmer').removeClass("active");
+
         $('#add_popup').modal("hide"); 
         $('#item'+data.id).addClass("positive"); 
         setTimeout(function() {
@@ -85,6 +89,8 @@ messages: {
     fin_time_edit: "Selecciona un horario.",
 },
 submitHandler: function(form){
+      $('.ui.inverted.dimmer').addClass("active");
+
     $.ajax({
         type: 'POST',
         url: 'asingcourse/'+$('#id_edit').val()+'/edit',
@@ -103,6 +109,8 @@ submitHandler: function(form){
               $('#item'+data.id).removeClass("warning"); 
 
           },2000);          
+                  $('.ui.inverted.dimmer').removeClass("active");
+
           $('#edit_popup').modal("hide");
 
       },
@@ -111,6 +119,8 @@ submitHandler: function(form){
 });
 //evento para eliminar a un usuario
 $('#eliminar').on('click',function () {
+      $('.ui.inverted.dimmer').addClass("active");
+
     $.ajax({
         type: 'POST',
         url: 'asingcourse/'+$('#id_delete').val()+'/delete',
@@ -118,6 +128,7 @@ $('#eliminar').on('click',function () {
             '_token': $('input[name=_token]').val()
         },success: function(data) {
             $('#item'+data.id).addClass("negative");
+        $('.ui.inverted.dimmer').removeClass("active");
 
             $('#delete_popup').modal("hide");
             setTimeout(function() {

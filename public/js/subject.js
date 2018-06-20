@@ -1,5 +1,3 @@
-
-// eventos para mostrar los popups
 $(document).on('click','.ui.green.button.add',function () {
     $('#add_popup').modal("show");    
 });
@@ -17,43 +15,28 @@ $(document).on('click','.ui.button.eliminar',function () {
 //evento para agregar un nuevo usuario
 $('#form_add').validate({
   rules: {
-    first_name_add: { required: true, minlength: 2},
-    second_name_add: { required: true, minlength: 2},
-    email_add: { required:true, email: true}
+    materia: { required: true, minlength: 3}
 },
 messages: {
-    first_name_add: "Debe introducir un nombre.",
-    second_name_add: "Debe introducir un apellido.",
-    email_add : "Debe introducir un email válido."
+    materia: "Introduce un nombre para la materia. (ejm: Matematicas)"
 },
 submitHandler: function(form){
-  $('.ui.inverted.dimmer').addClass("active");
-  var tipo = $('#tipo').val();
+      $('.ui.inverted.dimmer').addClass("active");
+
   $.ajax({
     type: 'POST',
-    url: 'user',
+    url: 'subject',
     data: {
         '_token': $('input[name=_token]').val(),
-        'tipo':tipo,
-        'firstname': $('#first_name_add').val(),
-        'secondname':$('#second_name_add').val(),
-        'email':$('#email_add').val()
+        'materia': $('#materia').val(),
     },success: function(data) {
 
-        $('#first_name_add').val("");
-        $('#second_name_add').val("");
-        $('#email_add').val("");
-        $('#table_content').append(data.data);
-        $('.ui.inverted.dimmer').removeClass("active");   
+        $('#materia').val("");
+        $('#table_content').append(data.data);   
+                $('.ui.inverted.dimmer').removeClass("active");
+
         $('#add_popup').modal("hide"); 
-        $.uiAlert({
-textHead: 'Registro exitoso',
-text: 'Se ha enviado un email con los datos de ingreso a la plataforma al usuario '+$('#first_name_add').val()+" "+$('#second_name_add').val(),
- bgcolor: '#19c3aa',
-  textcolor: '#fff',
-   position: 'top-right',
-    icon: 'checkmark box',
-     time: 3,});
+
         $('#item'+data.id).addClass("positive"); 
         setTimeout(function() {
           $('#item'+data.id).removeClass("positive"); 
@@ -70,37 +53,29 @@ text: 'Se ha enviado un email con los datos de ingreso a la plataforma al usuari
 //evento para editar a un usuario
 $('#form_edit').validate({
   rules: {
-    first_name_edit: { required: true, minlength: 2},
-    second_name_edit: { required: true, minlength: 2},
-    email_edit: { required:true, email: true}
+   materia_edit: { required: true, minlength: 3}
 },
 messages: {
-    first_name_add: "Debe introducir un nombre.",
-    second_name_add: "Debe introducir un apellido.",
-    email_add : "Debe introducir un email válido."
+     materia_edit: "Introduce un nombre para la materia. (ejm: Matematicas)"
 },
 submitHandler: function(form){
       $('.ui.inverted.dimmer').addClass("active");
 
     $.ajax({
         type: 'POST',
-        url: 'user/'+$('#id_edit').val()+'/edit',
+        url: 'subject/'+$('#id_edit').val()+'/edit',
         data: {
             '_token': $('input[name=_token]').val(),
-            'firstname': $('#first_name_edit').val(),
-            'secondname':$('#second_name_edit').val(),
-            'email':$('#email_edit').val()
+            'materia_edit': $('#materia_edit').val(),
         },success: function(data) {
-          $('#item'+data.id+' .username').html(data.username);
           $('#item'+data.id+' .name').html(data.name);
-          $('#item'+data.id+' .email').html(data.email);
 
           $('#item'+data.id).addClass("warning"); 
           setTimeout(function() {
               $('#item'+data.id).removeClass("warning"); 
 
-          },2000);                
-            $('.ui.inverted.dimmer').removeClass("active");
+          },2000);          
+                  $('.ui.inverted.dimmer').removeClass("active");
 
           $('#edit_popup').modal("hide");
 
@@ -114,11 +89,10 @@ $('#eliminar').on('click',function () {
 
     $.ajax({
         type: 'POST',
-        url: 'user/'+$('#id_delete').val()+'/delete',
+        url: 'subject/'+$('#id_delete').val()+'/delete',
         data: {
             '_token': $('input[name=_token]').val()
         },success: function(data) {
-            $('#delete_popup').popup('hide all');
             $('#item'+data.id).addClass("negative");
         $('.ui.inverted.dimmer').removeClass("active");
 
@@ -141,14 +115,13 @@ $('#eliminar').on('click',function () {
 function cargar(id) {
    $.ajax({
         type: 'GET',
-        url: 'user/'+id,
+        url: 'subject/'+id,
         data: {
             '_token': $('input[name=_token]').val(),
          },success: function(data) {
                 $('#id_edit').val(data.id);
-                $('#first_name_edit').val(data.first_name);
-                $('#second_name_edit').val(data.second_name);
-                $('#email_edit').val(data.email);
+                $('#materia_edit').val(data.name);
+          
         },
     }); 
 }

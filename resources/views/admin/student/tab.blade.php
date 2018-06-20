@@ -16,7 +16,8 @@
   </tbody>
   <tfoot>
     <tr>
-      <th colspan="6">Total Estudiantes: <span id="count_text{{$classroom->id}}">{{$classroom->users()->count()}}</span></th>
+      <th colspan="2">Total Estudiantes: <span id="count_text{{$classroom->id}}">{{$classroom->users()->count()}}</span></th>
+      <th colspan="2">Total Cupos: <span>{{$classroom->quota}}</span></th>
           </tr>
   </tfoot>
 </table>

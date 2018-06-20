@@ -33,4 +33,12 @@ class CoordinatorController extends Controller
 
         return view('coordinator.teacher.index', compact('teachers')); 
     }
+     //pantalla para agregar, editar o eliminar una asignacion de materias
+    public function AsingCourseIndex(Request $request)
+    {
+          $request->user()->authorizeRoles(['coordinator']);
+        $school=School::find($request->user()->school->id);
+        $classrooms=$school->classrooms;
+        return view('coordinator.asingcourse.index', compact('classrooms')); 
+    }
 }
