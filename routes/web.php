@@ -17,11 +17,19 @@ Auth::routes();
 Route::middleware(['auth'])->group(function()
 {	
 
-	Route::get('/superadmin','HomeController@super');
-	Route::post('/superadmin/school','HomeController@schoolSave');
-	Route::get('/superadmin/school/{id}','HomeController@schoolShow');
-	Route::post('/superadmin/school/{id}/edit','HomeController@schoolUpdate');
-	Route::post('/superadmin/school/{id}/delete','HomeController@schoolDelete');
+	Route::get('/superadmin','HomeController@super')->name('super.index');
+	Route::post('/superadmin/school','HomeController@schoolSave')->name('super.save');
+	Route::get('/superadmin/school/{id}','HomeController@schoolShow')->name('super.show');
+	Route::post('/superadmin/school/{id}/edit','HomeController@schoolUpdate')->name('super.update');
+	Route::post('/superadmin/school/{id}/delete','HomeController@schoolDelete')->name('super.delete');
+	Route::get('/superadmin/dba','HomeController@DbaIndex')->name('super.dba.index');
+	Route::get('/superadmin/grade','HomeController@GradeIndex')->name('super.grade.index');
+	Route::get('/superadmin/subject', 'HomeController@SubjectIndex')->name('super.subject.index');	
+	Route::post('/superadmin/subject', 'HomeController@SubjectSave')->name('super.subject.save');
+	Route::post('/superadmin/subject/{id}/edit', 'AdminController@SubjectUpdate');
+	Route::post('/superadmin/subject/{id}/delete', 'AdminController@SubjectDelete');
+
+
 	//Rutas para las paginas de inicio de los diferentes usuarios
 	Route::get('/', 'HomeController@index');
 	Route::get('/admin', 'AdminController@index')->name('admin.home');	
@@ -73,12 +81,16 @@ Route::middleware(['auth'])->group(function()
 		Route::get('/coordinator/student', 'CoordinatorController@StudentIndex')->name('coordinator.student.index');
 		//Rutas para ver, agregar, editar y eliminar Horarios
 		Route::get('/coordinator/asingcourse', 'CoordinatorController@AsingCourseIndex')->name('coordinator.asingcourse.index');	
-
+		Route::get('/coordinator/classroom', 'CoordinatorController@ClassRoomIndex')->name('coordinator.classroom.index');
 
 	/*Rutas como profesor*/
 
 		//Rutas para ver, agregar, editar y eliminar Estudiantes
-		Route::get('/teacher/student', 'TeacherController@StudentIndex')->name('teacher.student.index');	
+		Route::get('/teacher/clases', 'TeacherController@ClassIndex')->name('teacher.class.index');			
+		Route::get('/teacher/clases/{id}', 'TeacherController@ClassStudentIndex')->name('teacher.class.student.index');	
+		Route::get('/teacher/grupos', 'TeacherController@GroupIndex')->name('teacher.group.index');
+		Route::get('/teacher/grupos/{id}/estudiantes', 'TeacherController@GroupStudentIndex')->name('teacher.group.student.index');
+
 
 });
 

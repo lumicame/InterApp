@@ -3,7 +3,11 @@
       <td class="classroom">{{$class->classroom}}</td>
       <td class="grade">{{$class->grade->name}}</td>
       <td class="jornada">{{$class->jornada}}</td>
-      <td>{{$class->director()->first()->name." - ".$class->director()->first()->username}}</td>
+      @if($class->director()->first())
+        <td>{{$class->director()->first()->name." - ".$class->director()->first()->username}}</td>
+      @else
+      <td>Por asignado</td>
+      @endif
       <td>{{$class->users()->count()}}</td>
       <td class="quota">{{$class->quota}}</td>
       <td><center><div class="ui small icon buttons">

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\School;
 use App\Role;
 use App\User;
+use App\Subject;
+use App\Dba;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
@@ -106,7 +108,7 @@ class HomeController extends Controller
     }
     public function schoolUpdate(Request $data,$id)
     {
-        $request->user()->authorizeRoles(['super']);
+        $data->user()->authorizeRoles(['super']);
         $array=$data->all();
         $school=School::find($id);
         $school->name=$data->name_edit;
@@ -115,19 +117,55 @@ class HomeController extends Controller
         $school->save();
         return response()->json($school);
     }
-    public function schoolDelete($id)
+    public function schoolDelete($id,Request $request)
     {
         $request->user()->authorizeRoles(['super']);
         $school=School::find($id);
         $school->delete();
      return response()->json($school);
     }
-    public function DbaIndex()
+    public function DbaIndex(Request $request)
     {
-        # code...
+        $request->user()->authorizeRoles(['super']);
+         $dbas=Dba::all();   
+         return view('super.dba.index', compact('dbas')); 
     }
-    public function GradeIndex()
+      public function DbaSave(Request $request)
     {
-        # code...
+        $request->user()->authorizeRoles(['super']);
+         $dba=new Dba();   
+        $view = view('super.dba.dba')->with('dba',$dba)->render();
+        return response()->json(['data'=>$view,'id'=>"".$dba->id]);
     }
+      public function DbaDelete($id,Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+         $dba=Dba::find($id);   
+    
+        return response()->json($dba); 
+    }
+    public function GradeIndex(Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+
+    }
+
+    public function SubjectIndex(Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+        $subjects =Subject::where([['school_id', '=', null]])->get();
+        return view('super.subject.index', compact('subjects')); 
+    }
+    public function SubjectSave(Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+        $subject =new Subject();
+        $subject->name = $request->materia;
+        $subject->save();
+        $view = view('admin.subject.subject')->with('subject',$subject)->render();
+        return response()->json(['data'=>$view,'id'=>"".$subject->id]);
+    }
+
+  
 }
+

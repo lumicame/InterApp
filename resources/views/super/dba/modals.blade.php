@@ -5,7 +5,11 @@
   </div>
   <div class="content">
       <form class="ui form" method="post" id="form_add">
-        <h4 class="ui dividing header">Informacion Horario</h4>
+        <h4 class="ui dividing header">Informacion del DBA</h4>
+        <div class="field">
+          <label>Nombre para el DBA</label>
+          <input type="text" name="name_add" id="name_add" placeholder="(ejm: DBA suma matematicas)">
+          </div>
         <div class="field" >
               <label>Materia</label>
     <select class="required" name="subject_add" id="subject_add" autofocus>
@@ -16,58 +20,16 @@
     @endforeach
     </select>
         </div>
-        <div class="field">
-          <label>Docente</label>
-          <?php
-          $roles=App\Role::where('name','teacher')->first();
-        $teachers =App\User::where([['role_id', '=', $roles->id],['school_id', '=', Auth::user()->school->id]])->get();
-               ?>
-      <select class="required" id="user_add" name="user_add">
-    <option value="">Selecciona un profesor</option>
-    @foreach($teachers as $teacher)
-    <option value="{{$teacher->id}}">{{$teacher->name." - ".$teacher->username}}</option>
+        <div class="field" >
+              <label>Grado °</label>
+    <select class="required" name="grade_add" id="grade_add" autofocus>
+    <option value="">Selecciona un grado</option>
+    <?php $grades=App\Grade::all(); ?>
+    @foreach($grades as $grade)
+    <option value="{{$grade->id}}">{{$grade->name}}</option>
     @endforeach
     </select>
         </div>
-        <div class="field disabled">
-          <input type="hidden" class="classroom_add" id="classroom_add">
-          <label>Curso</label>
-          <input type="text" id="text_class_add" disabled="true">
-        </div>
-
-          <div class="field">
-            <select class="required" id="day_add" name="day_add">
-            <option value="">Selecciona un dia</option>
-            <option value="Lunes">Lunes</option>
-            <option value="Martes">Martes</option>
-            <option value="Miercoles">Miercoles</option>
-            <option value="Jueves">Jueves</option>
-            <option value="Viernes">Viernes</option>
-            <option value="Sabado">Sabado</option> 
-          </select>
-          </div>
-          <div class="two fields">
-            <div class="field">
-          <input type="text" name="inicio_add" id="inicio_add" placeholder="(ejm: 7:45)">
-          </div>
-           <div class="field">
-               <select class="required" name="inicio_time_add" id="inicio_time_add">
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-          </select>
-           </div>
-          </div>
-          <div class="two fields">
-            <div class="field">
-          <input type="text" name="fin_add" id="fin_add" placeholder="(ejm: 7:45)">
-          </div>
-          <div class="field">
-               <select class="required" name="fin_time_add" id="fin_time_add">
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-          </select>
-           </div>
-          </div>
         <button class="ui button green right floated" style="margin-bottom: 10px" id="agregar">Agregar</button>
         </form>
       

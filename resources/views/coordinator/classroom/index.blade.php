@@ -1,37 +1,41 @@
 @extends('layouts.layout')
 @section('title')
-<h4 id="title_materia" class="header item">
- DBA
-     </h4>
-    
+<h4 id="title_materia" class="header item">{{Auth::user()->school->name}}</h4> 
 @endsection
 
+@section('StyleNav')
+@include('coordinator.style')
+@endsection
 
 @section('slider')
- @include('super.slider')
+ @include('coordinator.slider')
 @endsection
 @section('content')
- <div class="ui segment">
- <h1 class="ui header">Grados</h1>
+       
+<div class="ui segment">
+ <h1 class="ui header">Salones</h1>
 <div class="row" >
   <table class="ui blue small selectable celled table" id="table_content" >
     <thead>
       <tr >
-        <th>Codigo</th>
-        <th>Grado</th>
-        <th>Materia</th>
-        <th>Tolal Preguntas</th>
+        <th>Curso</th>
+        <th>Aula</th>
+        <th>Grado°</th>
+        <th>Jornada</th>
+        <th>Director de grupo</th>
+        <th>Tolal Alumnos</th>
+        <th>Total Cupos</th>
         <th>Acción</th>
       </tr>
     </thead>
     <tbody>
-     @foreach($grades as $grade)
+     @foreach($classroom as $class)
     @include('admin.classroom.classroom')
     @endforeach
   </tbody>
   <tfoot>
     <tr>
-    	<th colspan="6">Total Salones: <span id="count_text">{{$classroom->count()}}</span></th>
+    	<th colspan="8">Total Salones: <span id="count_text">{{$classroom->count()}}</span></th>
     	</tr>
       
   </tfoot>

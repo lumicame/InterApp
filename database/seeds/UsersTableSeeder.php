@@ -9,6 +9,7 @@ use App\Subject;
 use App\Classroom;
 use App\Date;
 use App\Shedule;
+use App\Dba;
 use Faker\Generator as Faker;
 
 
@@ -102,7 +103,7 @@ class UsersTableSeeder extends Seeder
         $subject=new Subject();
         $subject->name="Matematicas";
         $subject->save();
-        $school->subjects()->save($subject);
+        
 
         $date=new App\Date();
         $date->star = '7 am';
@@ -116,6 +117,12 @@ class UsersTableSeeder extends Seeder
         $shedule->user_id=$user->id;
         $shedule->save();
         $shedule->dates()->save($date);
+        $dba=new Dba();
+        $dba->name="DBA de sumas matematicas";
+        $dba->grade_id=$grade->id;
+        $dba->subject_id=$subject->id;
+        $dba->save();
+
         }
 
         

@@ -28,6 +28,7 @@ $(document).on('click','.ui.button.eliminar',function () {
         email_add: "Escribe un correo electronico valido"
     },
     submitHandler: function(form){
+        $('.ui.inverted.dimmer').addClass("active");
       $.ajax({
         type: 'POST',
         url: 'superadmin/school',
@@ -45,6 +46,8 @@ $(document).on('click','.ui.button.eliminar',function () {
             $('#first_name_admin_add').val("");
             $('#second_name_admin_add').val("");
             $('#email_add').val("");
+                    $('.ui.inverted.dimmer').removeClass("active");   
+
             $('#table_content').append(
                 '<tr id="user'+data.id+'">'+
                 '<td class="nit">'+data.nit+'</td>'+
@@ -84,6 +87,8 @@ $(document).on('click','.ui.button.eliminar',function () {
         email_edit : "Debe introducir un email válido."
     },
     submitHandler: function(form){
+        $('.ui.inverted.dimmer').addClass("active");
+
         $.ajax({
             type: 'POST',
             url: 'superadmin/school/'+$('#id_edit').val()+'/edit',
@@ -101,6 +106,8 @@ $(document).on('click','.ui.button.eliminar',function () {
               setTimeout(function() {
                   $('#user'+data.id).removeClass("warning"); 
               },2000);          
+                      $('.ui.inverted.dimmer').removeClass("active");   
+
               $('#edit_popup').modal("hide");
 
           },
@@ -109,6 +116,8 @@ $(document).on('click','.ui.button.eliminar',function () {
     });
 //evento para eliminar a un usuario
 $('#eliminar').on('click',function () {
+    $('.ui.inverted.dimmer').addClass("active");
+
     $.ajax({
         type: 'POST',
         url: 'superadmin/school/'+$('#id_delete').val()+'/delete',
@@ -117,6 +126,7 @@ $('#eliminar').on('click',function () {
         },success: function(data) {
             $('#delete_popup').popup('hide all');
             $('#user'+data.id).addClass("negative");
+        $('.ui.inverted.dimmer').removeClass("active");   
 
             $('#delete_popup').modal("hide");
             setTimeout(function() {

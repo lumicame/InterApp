@@ -1,22 +1,18 @@
 @extends('layouts.layout')
-
 @section('title')
 <h4 id="title_materia" class="header item">
- {{Auth::user()->school->name}}
+ Preguntas
      </h4>
+    
 @endsection
-
-@section('StyleNav')
-@include('teacher.style')
-@endsection
-
 @section('slider')
- @include('teacher.slider')
-@endsection
+ @include('super.slider')
 
+@endsection
 @section('content')
+       
 <div class="ui segment">
- <h1 class="ui header">Estudiantes</h1>
+ <h1 class="ui header">Preguntas</h1>
 
 <div class="row" >
   <div class="ui grid">
@@ -32,21 +28,20 @@
   </div>
   <div class="thirteen wide stretched column">
     @foreach($classrooms as $classroom)
-      @include('admin.student.tab')
+      @include('admin.asingcourse.tab')
       @endforeach
   </div>
 </div>
  
 </div>
 </div>
-        <input type="hidden" id="tipo" value="student">
 
 
 <!-- popup para agregar a un usuario -->
-@include('admin.student.modals')
+@include('admin.asingcourse.modals')
 
 <meta name="_token" content="{{ csrf_token() }}"/>
 @endsection
 @section('script')
-<script src="{{asset('js/student.js')}}"></script>
+<script src="{{asset('js/course.js')}}"></script>
 @endsection

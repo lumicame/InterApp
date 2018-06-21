@@ -15,4 +15,9 @@ class Subject extends Model
     {
          return $this->hasMany('App\Shedule');
     }
+
+    function dbas()
+    {
+    	return $this->hasMany('App\Dba');
+    }
 }

@@ -5,6 +5,9 @@
  <a class="item" href="{{route('coordinator.student.index')}}" >
     Estudiantes
   </a>
+  <a class="item" href="{{route('coordinator.classroom.index')}}">
+    Salones
+  </a>
   <a class="item" href="{{route('coordinator.asingcourse.index')}}">
     Horarios
   </a>

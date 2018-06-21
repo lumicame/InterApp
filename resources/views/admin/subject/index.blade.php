@@ -11,7 +11,7 @@
 @section('content')
        
 <div class="ui segment">
- <h1 class="ui header">Salones</h1>
+ <h1 class="ui header">Materias</h1>
 <div class="row" >
   <table class="ui blue small selectable celled table" id="table_content" >
     <thead>

@@ -41,4 +41,12 @@ class CoordinatorController extends Controller
         $classrooms=$school->classrooms;
         return view('coordinator.asingcourse.index', compact('classrooms')); 
     }
+     //pantalla para agregar, editar o eliminar un salon de clases
+    public function ClassRoomIndex(Request $request)
+    {
+        $request->user()->authorizeRoles(['coordinator']);
+        $school=School::find($request->user()->school->id);
+        $classroom=$school->classrooms;
+        return view('coordinator.classroom.index', compact('classroom')); 
+    }
 }

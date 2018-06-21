@@ -241,8 +241,7 @@ class AdminController extends Controller
      public function SubjectIndex(Request $request)
     {
         $request->user()->authorizeRoles(['admin']);
-        $school=School::find($request->user()->school->id);
-        $subjects=$school->subjects;
+        $subjects =Subject::where([['school_id', '=', null]])->get();
         return view('admin.subject.index', compact('subjects')); 
     }
     public function SubjectShow($id)
@@ -263,7 +262,7 @@ class AdminController extends Controller
     }
     public function SubjectUpdate(Request $request,$id)
     {
-        $request->user()->authorizeRoles(['admin']);
+        $request->user()->authorizeRoles(['admin','super']);
         $subject= Subject::find($id); 
         $subject->name = $request->materia_edit;
         $subject->save();
@@ -271,7 +270,7 @@ class AdminController extends Controller
     }
     public function SubjectDelete($id,Request $request)
     {
-        $request->user()->authorizeRoles(['admin']);
+        $request->user()->authorizeRoles(['admin','super']);
          $subject= Subject::find($id);
          $subject->delete();
         return response()->json($subject);

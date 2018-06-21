@@ -10,4 +10,8 @@ class Grade extends Model
 	{
 		return $this->hasMany('App\Classroom');
 	}
+	function dbas()
+    {
+    	return $this->hasMany('App\Dba');
+    }
 }

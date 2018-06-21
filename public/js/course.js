@@ -7,7 +7,7 @@ $(document).on('click','.ui.green.button.add',function () {
     $('#add_popup').modal("show");    
 });
 $(document).on('click','.ui.button.editar',function () {
-   cargar($(this).data("id"));
+  $('#id_edit').val($(this).data("id"));
    $('#edit_popup').modal("show");    
 });
 
@@ -102,6 +102,11 @@ submitHandler: function(form){
                     'fin':$('#fin_edit').val(),
                     'fin_time':$('#fin_time_edit').val(),
         },success: function(data) {
+          $('#day_edit').prop('selectedIndex', 0);
+          $('#inicio_edit').val('');
+          $('#inicio_time_edit').prop('selectedIndex', 0);
+          $('#fin_edit').val('');
+          $('#fin_time_edit').prop('selectedIndex', 0);
           $('#item'+data.id +' .shedule').append(data.fecha+'<br>');
 
           $('#item'+data.id).addClass("warning"); 

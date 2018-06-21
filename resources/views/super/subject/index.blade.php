@@ -1,37 +1,33 @@
 @extends('layouts.layout')
 @section('title')
 <h4 id="title_materia" class="header item">
- DBA
+ Materias
      </h4>
     
 @endsection
-
-
 @section('slider')
  @include('super.slider')
 @endsection
 @section('content')
- <div class="ui segment">
- <h1 class="ui header">Grados</h1>
+       
+<div class="ui segment">
+ <h1 class="ui header">Materias</h1>
 <div class="row" >
   <table class="ui blue small selectable celled table" id="table_content" >
     <thead>
-      <tr >
-        <th>Codigo</th>
-        <th>Grado</th>
+      <tr>
         <th>Materia</th>
-        <th>Tolal Preguntas</th>
         <th>Acción</th>
       </tr>
     </thead>
     <tbody>
-     @foreach($grades as $grade)
-    @include('admin.classroom.classroom')
+     @foreach($subjects as $subject)
+    @include('admin.subject.subject')
     @endforeach
   </tbody>
   <tfoot>
     <tr>
-    	<th colspan="6">Total Salones: <span id="count_text">{{$classroom->count()}}</span></th>
+    	<th colspan="6">Total Salones: <span id="count_text">{{$subjects->count()}}</span></th>
     	</tr>
       
   </tfoot>
@@ -46,10 +42,10 @@
   <i class="icon plus"></i>
 </button>
 <!-- popup para agregar a un usuario -->
-@include('admin.classroom.modals')
+@include('admin.subject.modals')
 
 <meta name="_token" content="{{ csrf_token() }}"/>
 @endsection
 @section('script')
-<script src="{{asset('js/classroom.js')}}"></script>
+<script src="{{asset('js/subject.js')}}"></script>
 @endsection
