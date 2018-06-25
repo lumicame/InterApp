@@ -1,10 +1,11 @@
+   <!-- popup para agregar un nuevo dba -->
 <div class="ui mini modal" id="add_popup">
   <i class="close icon"></i>
   <div class="ui inverted dimmer">
     <div class="ui large text loader">Guardando...</div>
   </div>
   <div class="content">
-      <form class="ui form" method="post" id="form_add">
+      <form class="ui form" id="form_add_dba">
         <h4 class="ui dividing header">Informacion del DBA</h4>
         <div class="field">
           <label>Nombre para el DBA</label>
@@ -32,21 +33,39 @@
         </div>
         <button class="ui button green right floated" style="margin-bottom: 10px" id="agregar">Agregar</button>
         </form>
-      
+  </div>
+</div>
+  <!-- fin del popup -->
+
+   <!-- popup para edita un DBA -->
+<div class="ui mini modal" id="edit_popup">
+  <i class="close icon"></i>
+  <div class="ui inverted dimmer">
+    <div class="ui large text loader">Guardando...</div>
+  </div>
+  <div class="content">
+      <form class="ui form" id="form_edit_dba">
+        <h4 class="ui dividing header">Informacion del DBA</h4>
+        <div class="field">
+          <label>Nombre para el DBA</label>
+          <input type="text" name="name_edit" id="name_edit" placeholder="(ejm: DBA suma matematicas)">
+          </div>
+        <button class="ui button blue right floated" style="margin-bottom: 10px" id="editar">editar</button>
+        </form>
   </div>
 </div>
   <!-- fin del popup -->
 
    <!-- popup para editar a un usuario -->
-<div class="ui mini modal" id="edit_popup">
+<div class="ui large modal" id="add_quistion">
     <i class="close icon"></i>
 <div class="ui inverted dimmer">
     <div class="ui large text loader">Agregando...</div>
   </div>
-    <div class="content">
-
-      <form class="ui form" method="post" id="form_edit">
-        <input type="hidden" value="" id="id_edit">
+<div class="header">Agregar Preguntas</div>
+    <div class="scrolling content">
+      <form class="ui form" method="post" id="form_add_question">
+        <input type="hidden" value="" id="id_edit_dba">
         <h4 class="ui dividing header">Agregar un horario a esta materia</h4>
         <div class="field">
             <select class="required" id="day_edit" name="day_edit">
@@ -81,14 +100,14 @@
           </select>
            </div>
           </div>
-        <button class="ui button green right floated" style="margin-bottom: 10px" id="editar">Agregar</button>
+        <button class="ui button green right floated" style="margin-bottom: 10px" id="add_pregunta">Agregar</button>
       </form>
     </div>
 </div>
   <!-- fin del popup -->
 
   <!-- popup para eliminar a un usuario -->
-  <div class="ui mini modal" id="delete_popup">
+  <div class="ui modal" id="delete_popup">
     <i class="close icon"></i>
     <div class="ui inverted dimmer">
     <div class="ui large text loader">Eliminando...</div>
@@ -98,7 +117,7 @@
           <input type="hidden" id="classroom_id_delete" value="">
           <input type="hidden" id="id_delete" value="">
           <h4 class="ui header">Seguro que deseas eliminar este horario</h4>
-          <button class="ui button red right floated" style="margin-bottom: 10px" id="eliminar">Eliminar</button>
+          <button class="ui button red right floated" style="margin-bottom: 10px" id="eliminar_dba">Eliminar</button>
         </div>
 
     </div>

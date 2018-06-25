@@ -23,11 +23,14 @@ Route::middleware(['auth'])->group(function()
 	Route::post('/superadmin/school/{id}/edit','HomeController@schoolUpdate')->name('super.update');
 	Route::post('/superadmin/school/{id}/delete','HomeController@schoolDelete')->name('super.delete');
 	Route::get('/superadmin/dba','HomeController@DbaIndex')->name('super.dba.index');
+	Route::post('/superadmin/dba', 'HomeController@DbaSave')->name('super.dba.save');
+	Route::post('/superadmin/dba/{id}/delete', 'HomeController@DbaDelete');
 	Route::get('/superadmin/grade','HomeController@GradeIndex')->name('super.grade.index');
 	Route::get('/superadmin/subject', 'HomeController@SubjectIndex')->name('super.subject.index');	
 	Route::post('/superadmin/subject', 'HomeController@SubjectSave')->name('super.subject.save');
 	Route::post('/superadmin/subject/{id}/edit', 'AdminController@SubjectUpdate');
 	Route::post('/superadmin/subject/{id}/delete', 'AdminController@SubjectDelete');
+	Route::get('/superadmin/question','HomeController@QuestionIndex')->name('super.question.index');
 
 
 	//Rutas para las paginas de inicio de los diferentes usuarios

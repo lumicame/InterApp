@@ -72,7 +72,7 @@ class HomeController extends Controller
 
     public function schoolSave(Request $data)
     {
-        $request->user()->authorizeRoles(['super']);
+        $data->user()->authorizeRoles(['super']);
         $array=$data->all();
         $role=Role::where('name','admin')->first();
         $array['pass']=str_random(8);
@@ -130,20 +130,25 @@ class HomeController extends Controller
          $dbas=Dba::all();   
          return view('super.dba.index', compact('dbas')); 
     }
-      public function DbaSave(Request $request)
+    public function DbaSave(Request $request)
     {
         $request->user()->authorizeRoles(['super']);
-         $dba=new Dba();   
-        $view = view('super.dba.dba')->with('dba',$dba)->render();
-        return response()->json(['data'=>$view,'id'=>"".$dba->id]);
+        $dba=new Dba();
+        $dba->name=$request->name_add;
+        $dba->grade_id=$request->grade_add;
+        $dba->subject_id=$request->subject_add;
+        $dba->save();
+         $view = view('super.dba.dba')->with('dba',$dba)->render();
+            return response()->json(['data'=>$view,'id'=>"".$dba->id]);
     }
       public function DbaDelete($id,Request $request)
     {
         $request->user()->authorizeRoles(['super']);
          $dba=Dba::find($id);   
-    
+            $dba->delete();
         return response()->json($dba); 
     }
+   
     public function GradeIndex(Request $request)
     {
         $request->user()->authorizeRoles(['super']);
@@ -164,6 +169,13 @@ class HomeController extends Controller
         $subject->save();
         $view = view('admin.subject.subject')->with('subject',$subject)->render();
         return response()->json(['data'=>$view,'id'=>"".$subject->id]);
+    }
+
+    public function QuestionIndex(Request $request)
+    {
+       $request->user()->authorizeRoles(['super']);
+       $dbas=Dba::all();
+       return view('super.question.index', compact('dbas')); 
     }
 
   

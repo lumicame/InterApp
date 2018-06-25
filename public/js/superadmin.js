@@ -2,6 +2,9 @@
 $(document).on('click','.ui.green.button.add',function () {
     $('#add_popup').modal("show");    
 });
+$(document).on('click','.ui.button.add',function () {
+   $('#add_question').modal("show");    
+});
 $(document).on('click','.ui.button.editar',function () {
    cargar($(this).data("id"));
    $('#edit_popup').modal("show");    
@@ -143,7 +146,115 @@ $('#eliminar').on('click',function () {
         },
     });
 });
+//Agregar un nuevo DBA
+$('#form_add_dba').validate({
+      rules: {
+        name_add:{required: true, minlength: 3},
+    },
+    messages: {
+        name_add:"Escribe el nombre del DBA (min:3 caracteres)",
+        subject_add:"Selecciona una materia",
+        grade_add: "Selecciona un grado",
+    },
+    submitHandler: function(form){
+        $('.ui.inverted.dimmer').addClass("active");
+      $.ajax({
+        type: 'POST',
+        url: 'dba',
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'name_add': $('#name_add').val(),
+            'subject_add':$('#subject_add').val(),
+            'grade_add':$('#grade_add').val(),
+        },success: function(data) {
 
+            $('#name_add').val("");
+          $('#subject_add').prop('selectedIndex', 0);
+            $('#grade_add').prop('selectedIndex', 0);
+                    $('.ui.inverted.dimmer').removeClass("active");   
+$('#add_popup').modal("hide");
+            $('#table_content').append(data.data);   
+
+            $('#item'+data.id).addClass("positive"); 
+            setTimeout(function() {
+              $('#item'+data.id).removeClass("positive"); 
+
+          },6000);          
+            var count= parseInt($('#count_text').html());
+            count=count+1;
+            $('#count_text').html(count);
+        },
+    });
+    }
+    });
+
+//evento para editar un DBA
+    $('#form_edit').validate({
+      rules: {
+        name_edit: { required: true, minlength: 2},
+    },
+    messages: {
+        name_edit: "Debe introducir un nombre.",
+        number_edit: "Debe introducir un apellido.",
+        email_edit : "Debe introducir un email válido."
+    },
+    submitHandler: function(form){
+        $('.ui.inverted.dimmer').addClass("active");
+
+        $.ajax({
+            type: 'POST',
+            url: 'superadmin/school/'+$('#id_edit').val()+'/edit',
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'name_edit': $('#name_edit').val(),
+                'number_edit':$('#number_edit').val(),
+                'email_edit':$('#email_edit').val()
+            },success: function(data) {
+              $('#user'+data.id+' .phone').html(data.phone);
+              $('#user'+data.id+' .name').html(data.name);
+              $('#user'+data.id+' .email').html(data.email);
+
+              $('#user'+data.id).addClass("warning"); 
+              setTimeout(function() {
+                  $('#user'+data.id).removeClass("warning"); 
+              },2000);          
+                      $('.ui.inverted.dimmer').removeClass("active");   
+
+              $('#edit_popup').modal("hide");
+
+          },
+      });
+    }
+    });
+
+//Eliminar un DBA
+$('#eliminar_dba').on('click',function () {
+    $('.ui.inverted.dimmer').addClass("active");
+
+    $.ajax({
+        type: 'POST',
+        url: 'dba/'+$('#id_delete').val()+'/delete',
+        data: {
+            '_token': $('input[name=_token]').val()
+        },success: function(data) {
+            $('#item'+data.id).addClass("negative");
+        $('.ui.inverted.dimmer').removeClass("active");   
+
+            $('#delete_popup').modal("hide");
+            setTimeout(function() {
+              $('#item'+data.id).fadeOut( "slow", function() {
+
+                  $('#item'+data.id).remove();
+
+                  var count= parseInt($('#count_text').html());
+                  count=count-1;
+                  $('#count_text').html(""+count);
+              });
+          }, 1000);
+
+        },
+    });
+});
 function cargar(id) {
    $.ajax({
         type: 'GET',
@@ -156,3 +267,4 @@ function cargar(id) {
         },
     }); 
 }
+

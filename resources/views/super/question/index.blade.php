@@ -15,21 +15,35 @@
  <h1 class="ui header">Preguntas</h1>
 
 <div class="row" >
-  <div class="ui grid">
-
-  <div class="three wide column">
-    <div class="ui vertical fluid tabular menu">
-      @foreach($classrooms as $classroom)
-      <a class="item" data-tab="{{$classroom->id}}">
-        {{$classroom->class}}
-      </a>
-      @endforeach
+  <div class="ui items">
+  <div class="item">
+    <div class="content">
+      <a class="header">Header</a>
+      <div class="meta">
+        <span>Description</span>
+      </div>
+      <div class="description">
+        <p></p>
+      </div>
+      <div class="extra">
+        Additional Details
+      </div>
     </div>
   </div>
-  <div class="thirteen wide stretched column">
-    @foreach($classrooms as $classroom)
-      @include('admin.asingcourse.tab')
-      @endforeach
+  <div class="item">
+    
+    <div class="content">
+      <a class="header">Header</a>
+      <div class="meta">
+        <span>Description</span>
+      </div>
+      <div class="description">
+        <p></p>
+      </div>
+      <div class="extra">
+        Additional Details
+      </div>
+    </div>
   </div>
 </div>
  
@@ -38,7 +52,7 @@
 
 
 <!-- popup para agregar a un usuario -->
-@include('admin.asingcourse.modals')
+
 
 <meta name="_token" content="{{ csrf_token() }}"/>
 @endsection
