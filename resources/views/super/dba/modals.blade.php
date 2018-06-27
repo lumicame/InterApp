@@ -45,7 +45,8 @@
   </div>
   <div class="content">
       <form class="ui form" id="form_edit_dba">
-        <h4 class="ui dividing header">Informacion del DBA</h4>
+                <h4 class="ui dividing header">Informacion del DBA</h4>
+                <input type="hidden" value="" id="id_edit">
         <div class="field">
           <label>Nombre para el DBA</label>
           <input type="text" name="name_edit" id="name_edit" placeholder="(ejm: DBA suma matematicas)">
@@ -57,49 +58,35 @@
   <!-- fin del popup -->
 
    <!-- popup para editar a un usuario -->
-<div class="ui large modal" id="add_quistion">
+<div class="ui small modal" id="add_question">
     <i class="close icon"></i>
 <div class="ui inverted dimmer">
     <div class="ui large text loader">Agregando...</div>
   </div>
-<div class="header">Agregar Preguntas</div>
+<div class="header">Agregar Pregunta</div>
     <div class="scrolling content">
       <form class="ui form" method="post" id="form_add_question">
-        <input type="hidden" value="" id="id_edit_dba">
-        <h4 class="ui dividing header">Agregar un horario a esta materia</h4>
+        <h4 class="ui dividing header">agregar descripcion de la pregunta</h4>
         <div class="field">
-            <select class="required" id="day_edit" name="day_edit">
-            <option value="">Selecciona un dia</option>
-            <option value="Lunes">Lunes</option>
-            <option value="Martes">Martes</option>
-            <option value="Miercoles">Miercoles</option>
-            <option value="Jueves">Jueves</option>
-            <option value="Viernes">Viernes</option>
-            <option value="Sabado">Sabado</option> 
-          </select>
+           <textarea id="text_pregunta" placeholder="Descripción de la pregunta"> </textarea>
           </div>
-          <div class="two fields">
             <div class="field">
+              <label>A</label>
           <input type="text" name="inicio_edit" id="inicio_edit" placeholder="(ejm: 7:45)">
           </div>
            <div class="field">
-               <select class="required" name="inicio_time_edit" id="inicio_time_edit">
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-          </select>
+               <label>B</label>
+          <input type="text" name="inicio_edit" id="inicio_edit" placeholder="(ejm: 7:45)">
            </div>
-          </div>
-          <div class="two fields">
             <div class="field">
-          <input type="text" name="fin_edit" id="fin_edit" placeholder="(ejm: 7:45)">
+              <label>C</label>
+          <input type="text" name="inicio_edit" id="inicio_edit" placeholder="(ejm: 7:45)">
           </div>
-          <div class="field">
-               <select class="required" name="fin_time_edit" id="fin_time_edit">
-            <option value="AM">AM</option>
-            <option value="PM">PM</option>
-          </select>
+           <div class="field">
+               <label>D</label>
+          <input type="text" name="inicio_edit" id="inicio_edit" placeholder="(ejm: 7:45)">
            </div>
-          </div>
+       
         <button class="ui button green right floated" style="margin-bottom: 10px" id="add_pregunta">Agregar</button>
       </form>
     </div>
@@ -107,7 +94,7 @@
   <!-- fin del popup -->
 
   <!-- popup para eliminar a un usuario -->
-  <div class="ui modal" id="delete_popup">
+  <div class="ui mini modal" id="delete_popup">
     <i class="close icon"></i>
     <div class="ui inverted dimmer">
     <div class="ui large text loader">Eliminando...</div>

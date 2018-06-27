@@ -57,6 +57,10 @@ class HomeController extends Controller
             return redirect()->route('coordinator.home');
         }
 
+        if ($request->user()->hasRole('super'))
+        {
+            return redirect()->route('super.index');
+        }
 
     }
     public function super(Request $request)
@@ -130,6 +134,13 @@ class HomeController extends Controller
          $dbas=Dba::all();   
          return view('super.dba.index', compact('dbas')); 
     }
+    public function DbaShow($id,Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+         $dba=Dba::find($id);   
+         return response()->json($dba);
+    }
+    
     public function DbaSave(Request $request)
     {
         $request->user()->authorizeRoles(['super']);
@@ -138,8 +149,16 @@ class HomeController extends Controller
         $dba->grade_id=$request->grade_add;
         $dba->subject_id=$request->subject_add;
         $dba->save();
-         $view = view('super.dba.dba')->with('dba',$dba)->render();
-            return response()->json(['data'=>$view,'id'=>"".$dba->id]);
+        $view = view('super.dba.dba')->with('dba',$dba)->render();
+        return response()->json(['data'=>$view,'id'=>"".$dba->id]);
+    }
+    public function DbaUpdate($id,Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+        $dba=Dba::find($id);
+        $dba->name=$request->name_edit;
+        $dba->save();
+        return response()->json($dba);
     }
       public function DbaDelete($id,Request $request)
     {

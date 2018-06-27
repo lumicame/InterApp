@@ -23,7 +23,9 @@ Route::middleware(['auth'])->group(function()
 	Route::post('/superadmin/school/{id}/edit','HomeController@schoolUpdate')->name('super.update');
 	Route::post('/superadmin/school/{id}/delete','HomeController@schoolDelete')->name('super.delete');
 	Route::get('/superadmin/dba','HomeController@DbaIndex')->name('super.dba.index');
+	Route::get('/superadmin/dba/{id}','HomeController@DbaShow');
 	Route::post('/superadmin/dba', 'HomeController@DbaSave')->name('super.dba.save');
+	Route::post('/superadmin/dba/{id}/edit', 'HomeController@DbaUpdate');
 	Route::post('/superadmin/dba/{id}/delete', 'HomeController@DbaDelete');
 	Route::get('/superadmin/grade','HomeController@GradeIndex')->name('super.grade.index');
 	Route::get('/superadmin/subject', 'HomeController@SubjectIndex')->name('super.subject.index');	

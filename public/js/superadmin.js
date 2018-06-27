@@ -2,11 +2,15 @@
 $(document).on('click','.ui.green.button.add',function () {
     $('#add_popup').modal("show");    
 });
-$(document).on('click','.ui.button.add',function () {
+$(document).on('click','.ui.button.add_question',function () {
    $('#add_question').modal("show");    
 });
 $(document).on('click','.ui.button.editar',function () {
    cargar($(this).data("id"));
+   $('#edit_popup').modal("show");    
+});
+$(document).on('click','.ui.button.editar_dba',function () {
+   cargar_dba($(this).data("id"));
    $('#edit_popup').modal("show");    
 });
 
@@ -118,7 +122,7 @@ $(document).on('click','.ui.button.eliminar',function () {
     }
     });
 //evento para eliminar a un usuario
-$('#eliminar').on('click',function () {
+  $('#eliminar').on('click',function () {
     $('.ui.inverted.dimmer').addClass("active");
 
     $.ajax({
@@ -145,9 +149,9 @@ $('#eliminar').on('click',function () {
 
         },
     });
-});
+  });
 //Agregar un nuevo DBA
-$('#form_add_dba').validate({
+  $('#form_add_dba').validate({
       rules: {
         name_add:{required: true, minlength: 3},
     },
@@ -172,7 +176,7 @@ $('#form_add_dba').validate({
           $('#subject_add').prop('selectedIndex', 0);
             $('#grade_add').prop('selectedIndex', 0);
                     $('.ui.inverted.dimmer').removeClass("active");   
-$('#add_popup').modal("hide");
+  $('#add_popup').modal("hide");
             $('#table_content').append(data.data);   
 
             $('#item'+data.id).addClass("positive"); 
@@ -189,34 +193,28 @@ $('#add_popup').modal("hide");
     });
 
 //evento para editar un DBA
-    $('#form_edit').validate({
+    $('#form_edit_dba').validate({
       rules: {
         name_edit: { required: true, minlength: 2},
     },
     messages: {
-        name_edit: "Debe introducir un nombre.",
-        number_edit: "Debe introducir un apellido.",
-        email_edit : "Debe introducir un email válido."
+        name_edit: "Debe introducir un nombre."
     },
     submitHandler: function(form){
         $('.ui.inverted.dimmer').addClass("active");
 
         $.ajax({
             type: 'POST',
-            url: 'superadmin/school/'+$('#id_edit').val()+'/edit',
+            url: 'dba/'+$('#id_edit').val()+'/edit',
             data: {
                 '_token': $('input[name=_token]').val(),
                 'name_edit': $('#name_edit').val(),
-                'number_edit':$('#number_edit').val(),
-                'email_edit':$('#email_edit').val()
             },success: function(data) {
-              $('#user'+data.id+' .phone').html(data.phone);
-              $('#user'+data.id+' .name').html(data.name);
-              $('#user'+data.id+' .email').html(data.email);
+              $('#item'+data.id+' .name').html(data.name);
 
-              $('#user'+data.id).addClass("warning"); 
+              $('#item'+data.id).addClass("warning"); 
               setTimeout(function() {
-                  $('#user'+data.id).removeClass("warning"); 
+                  $('#item'+data.id).removeClass("warning"); 
               },2000);          
                       $('.ui.inverted.dimmer').removeClass("active");   
 
@@ -228,42 +226,50 @@ $('#add_popup').modal("hide");
     });
 
 //Eliminar un DBA
-$('#eliminar_dba').on('click',function () {
-    $('.ui.inverted.dimmer').addClass("active");
+    $('#eliminar_dba').on('click',function () {
+        $('.ui.inverted.dimmer').addClass("active");
 
-    $.ajax({
-        type: 'POST',
-        url: 'dba/'+$('#id_delete').val()+'/delete',
-        data: {
-            '_token': $('input[name=_token]').val()
-        },success: function(data) {
-            $('#item'+data.id).addClass("negative");
-        $('.ui.inverted.dimmer').removeClass("active");   
+        $.ajax({
+            type: 'POST',
+            url: 'dba/'+$('#id_delete').val()+'/delete',
+            data: {
+                '_token': $('input[name=_token]').val()
+            },success: function(data) {
+                $('#item'+data.id).addClass("negative");
+            $('.ui.inverted.dimmer').removeClass("active");   
 
-            $('#delete_popup').modal("hide");
-            setTimeout(function() {
-              $('#item'+data.id).fadeOut( "slow", function() {
+                $('#delete_popup').modal("hide");
+                setTimeout(function() {
+                  $('#item'+data.id).fadeOut( "slow", function() {
 
-                  $('#item'+data.id).remove();
+                      $('#item'+data.id).remove();
 
-                  var count= parseInt($('#count_text').html());
-                  count=count-1;
-                  $('#count_text').html(""+count);
-              });
-          }, 1000);
+                      var count= parseInt($('#count_text').html());
+                      count=count-1;
+                      $('#count_text').html(""+count);
+                  });
+              }, 1000);
 
-        },
+            },
+        });
     });
-});
 function cargar(id) {
    $.ajax({
         type: 'GET',
-        url: 'superadmin/school/'+id,
+        url: 'school/'+id,
+        success: function(data) {
+                $('#id_edit_dba').val(data.id);
+                $('#name_edit').val(data.name);
+        },
+    }); 
+}
+function cargar_dba(id) {
+   $.ajax({
+        type: 'GET',
+        url: 'dba/'+id,
         success: function(data) {
                 $('#id_edit').val(data.id);
                 $('#name_edit').val(data.name);
-                $('#number_edit').val(data.phone);
-                $('#email_edit').val(data.email);
         },
     }); 
 }
