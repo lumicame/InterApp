@@ -1,3 +1,5 @@
+
+
 // eventos para mostrar los popups
 $(document).on('click','.ui.green.button.add',function () {
     $('#add_popup').modal("show");    
@@ -249,17 +251,59 @@ $(document).on('click','.ui.button.eliminar',function () {
                       $('#count_text').html(""+count);
                   });
               }, 1000);
-
             },
         });
     });
+    //Agregar un nuevo DBA
+  $('#form_add_question').validate({
+      rules: {
+        text_pregunta: { required: true, minlength: 2},
+    },
+    messages: {
+        text_pregunta:"Escribe el nombre del DBA (min:3 caracteres)",
+    },
+    submitHandler: function(form){
+
+        alert($('#text_pregunta').val());
+    /*  $.ajax({
+        type: 'POST',
+        url: 'dba',
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'name_add': $('#name_add').val(),
+            'subject_add':$('#subject_add').val(),
+            'grade_add':$('#grade_add').val(),
+        },success: function(data) {
+            $('#name_add').val("");
+          $('#subject_add').prop('selectedIndex', 0);
+            $('#grade_add').prop('selectedIndex', 0);
+                    $('.ui.inverted.dimmer').removeClass("active");   
+  $('#add_popup').modal("hide");
+            $('#table_content').append(data.data);   
+
+            $('#item'+data.id).addClass("positive"); 
+            setTimeout(function() {
+              $('#item'+data.id).removeClass("positive"); 
+
+          },6000);          
+            var count= parseInt($('#count_text').html());
+            count=count+1;
+            $('#count_text').html(count);
+        },
+    });*/
+    }
+    });
+
 function cargar(id) {
    $.ajax({
         type: 'GET',
-        url: 'school/'+id,
+        url: 'superadmin/school/'+id,
         success: function(data) {
                 $('#id_edit_dba').val(data.id);
                 $('#name_edit').val(data.name);
+                $('#email_edit').val(data.email);
+                $('#number_edit').val(data.phone);
+                
         },
     }); 
 }

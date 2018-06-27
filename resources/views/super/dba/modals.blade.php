@@ -57,7 +57,7 @@
 </div>
   <!-- fin del popup -->
 
-   <!-- popup para editar a un usuario -->
+   <!-- popup para agregar una pregunta -->
 <div class="ui small modal" id="add_question">
     <i class="close icon"></i>
 <div class="ui inverted dimmer">

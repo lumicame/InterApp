@@ -1,11 +1,22 @@
 @extends('layouts.layout')
 @section('title')
+
+
 <h4 id="title_materia" class="header item">
  DBA
      </h4>
     
 @endsection
+@section('StyleNav')
+<style type="text/css">
+  .ui.mini.vertical.menu{
+    margin-top: 70px;
+  }
+</style>
+<link rel="stylesheet" href="{{asset('Trumbowyg/dist/ui/trumbowyg.min.css')}}"/>
 
+  <script type="text/javascript" src="{{asset('Trumbowyg/dist/trumbowyg.min.js')}}"></script> 
+@endsection
 
 @section('slider')
  @include('super.slider')
@@ -52,5 +63,9 @@
                 
 @endsection
 @section('script')
+<script type="text/javascript">
+      $('#text_pregunta').trumbowyg();
+
+</script>
 <script src="{{asset('js/superadmin.js')}}"></script>
 @endsection
