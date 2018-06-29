@@ -16,6 +16,10 @@
 <link rel="stylesheet" href="{{asset('Trumbowyg/dist/ui/trumbowyg.min.css')}}"/>
 
   <script type="text/javascript" src="{{asset('Trumbowyg/dist/trumbowyg.min.js')}}"></script> 
+<link rel="stylesheet" href="{{asset('Trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.css')}}"/>
+            <script src="{{asset('Trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js')}}"></script>
+            <script src="{{asset('Trumbowyg/dist/plugins/fontfamily/trumbowyg.fontfamily.min.js')}}"></script>
+            <script src="{{asset('Trumbowyg/dist/plugins/fontsize/trumbowyg.fontsize.min.js')}}"></script>
 @endsection
 
 @section('slider')
@@ -64,7 +68,101 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-      $('#text_pregunta').trumbowyg();
+      $('#text_pregunta').trumbowyg({
+    btns: [
+        ['undo', 'redo'], // Only supported in Blink browsers
+        ['formatting'],
+        ['strong', 'em', 'del'],
+        ['fontfamily'],
+        ['fontsize'],
+        ['foreColor', 'backColor'],
+        ['link'],
+        ['insertImage'],
+        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+        ['unorderedList', 'orderedList'],
+        ['horizontalRule'],
+        ['removeformat'],
+        ['fullscreen'],
+        
+                   
+                ]
+});
+      $('#answer_a').trumbowyg({
+    btns: [
+        ['undo', 'redo'], // Only supported in Blink browsers
+        ['formatting'],
+        ['strong', 'em', 'del'],
+        ['fontfamily'],
+        ['fontsize'],
+        ['foreColor', 'backColor'],
+        ['link'],
+        ['insertImage'],
+        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+        ['unorderedList', 'orderedList'],
+        ['horizontalRule'],
+        ['removeformat'],
+        ['fullscreen'],
+        
+                   
+                ]
+});
+      $('#answer_b').trumbowyg({
+    btns: [
+        ['undo', 'redo'], // Only supported in Blink browsers
+        ['formatting'],
+        ['strong', 'em', 'del'],
+        ['fontfamily'],
+        ['fontsize'],
+        ['foreColor', 'backColor'],
+        ['link'],
+        ['insertImage'],
+        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+        ['unorderedList', 'orderedList'],
+        ['horizontalRule'],
+        ['removeformat'],
+        ['fullscreen'],
+        
+                   
+                ]
+});
+      $('#answer_c').trumbowyg({
+    btns: [
+        ['undo', 'redo'], // Only supported in Blink browsers
+        ['formatting'],
+        ['strong', 'em', 'del'],
+        ['fontfamily'],
+        ['fontsize'],
+        ['foreColor', 'backColor'],
+        ['link'],
+        ['insertImage'],
+        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+        ['unorderedList', 'orderedList'],
+        ['horizontalRule'],
+        ['removeformat'],
+        ['fullscreen'],
+        
+                   
+                ]
+});
+      $('#answer_d').trumbowyg({
+    btns: [
+        ['undo', 'redo'], // Only supported in Blink browsers
+        ['formatting'],
+        ['strong', 'em', 'del'],
+        ['fontfamily'],
+        ['fontsize'],
+        ['foreColor', 'backColor'],
+        ['link'],
+        ['insertImage'],
+        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+        ['unorderedList', 'orderedList'],
+        ['horizontalRule'],
+        ['removeformat'],
+        ['fullscreen'],
+        
+                   
+                ]
+});
 
 </script>
 <script src="{{asset('js/superadmin.js')}}"></script>

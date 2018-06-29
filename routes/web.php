@@ -27,12 +27,17 @@ Route::middleware(['auth'])->group(function()
 	Route::post('/superadmin/dba', 'HomeController@DbaSave')->name('super.dba.save');
 	Route::post('/superadmin/dba/{id}/edit', 'HomeController@DbaUpdate');
 	Route::post('/superadmin/dba/{id}/delete', 'HomeController@DbaDelete');
+	Route::post('/superadmin/dba/question', 'HomeController@QuestionSave');
 	Route::get('/superadmin/grade','HomeController@GradeIndex')->name('super.grade.index');
 	Route::get('/superadmin/subject', 'HomeController@SubjectIndex')->name('super.subject.index');	
 	Route::post('/superadmin/subject', 'HomeController@SubjectSave')->name('super.subject.save');
 	Route::post('/superadmin/subject/{id}/edit', 'AdminController@SubjectUpdate');
 	Route::post('/superadmin/subject/{id}/delete', 'AdminController@SubjectDelete');
 	Route::get('/superadmin/question','HomeController@QuestionIndex')->name('super.question.index');
+	Route::post('/superadmin/question/search','HomeController@QuestionSearch');
+	Route::get('/superadmin/question/{id}','HomeController@QuestionShow');
+	Route::post('/superadmin/question/{id}/edit', 'HomeController@QuestionUpdate');
+	Route::post('/superadmin/question/{id}/delete', 'HomeController@QuestionDelete');
 
 
 	//Rutas para las paginas de inicio de los diferentes usuarios

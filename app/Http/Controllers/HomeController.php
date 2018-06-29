@@ -7,6 +7,7 @@ use App\Role;
 use App\User;
 use App\Subject;
 use App\Dba;
+use App\Question;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
@@ -167,6 +168,8 @@ class HomeController extends Controller
             $dba->delete();
         return response()->json($dba); 
     }
+
+    
    
     public function GradeIndex(Request $request)
     {
@@ -193,10 +196,82 @@ class HomeController extends Controller
     public function QuestionIndex(Request $request)
     {
        $request->user()->authorizeRoles(['super']);
-       $dbas=Dba::all();
-       return view('super.question.index', compact('dbas')); 
+       $questions=Question::all();
+       return view('super.question.index', compact('questions')); 
     }
+    public function QuestionSave(Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+        $question=new Question();
+        $dba=Dba::find($request->id_dba);
+        $question->question=$request->text_pregunta;
+        $question->a=$request->answer_a;
+        $question->b=$request->answer_b;
+        $question->c=$request->answer_c;
+        $question->d=$request->answer_d;
+        $question->correct=$request->answer_correct;
+        $question->dba_id=$dba->id;
+        $question->subject_id=$dba->subject->id;
+        $question->grade_id=$dba->grade->id;
+        $question->save();
+        $dba=Dba::find($request->id_dba);
+        $dba->count=$dba->questions->count();
+        return response()->json($dba); 
+    }
+    public function QuestionShow($id,Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+        $question=Question::find($id);
+        return response()->json($question); 
+    }
+    public function QuestionSearch(Request $request)
+    {
+        $request->user()->authorizeRoles(['super']);
+        $questions = Question::all();
+        $view="";
+        if($request->subject!=0 && $request->grade!=0){
+        $questions = Question::where([['subject_id', '=', $request->subject],['grade_id', '=', $request->grade]])->get();
+        }
+        if ($request->subject==0 && $request->grade!=0) {
+            $questions = Question::where('grade_id',$request->grade)->get();
+        }
+        if ($request->subject!=0 && $request->grade==0) {
+            $questions = Question::where('subject_id', $request->subject)->get();
+        }
+        if($request->subject==0 && $request->grade==0){
+            $questions = Question::all();
+        }
+        foreach ($questions as $question) {
+            $view = $view.view('super.question.question')->with('question',$question)->render();
+        }
+        if ($view=="") {
+            $view="<br><br><h1>No se encontraron preguntas</h1>";
+            return response()->json(['data'=>$view]);
+        }
+        return response()->json(['data'=>$view]);
+    }
+public function QuestionUpdate($id,Request $request)
+{
+    $request->user()->authorizeRoles(['super']);
+        $question=Question::find($id);
+        $question->question=$request->text_pregunta;
+        $question->a=$request->answer_a;
+        $question->b=$request->answer_b;
+        $question->c=$request->answer_c;
+        $question->d=$request->answer_d;
+        $question->correct=$request->answer_correct;
+        $question->save();
+        $view = view('super.question.question')->with('question',$question)->render();
+        return response()->json(['data'=>$view,'id'=>"".$question->id]);
 
-  
+}
+ public function QuestionDelete($id,Request $request)
+  {
+      $request->user()->authorizeRoles(['super']);
+        $question=Question::find($id);
+        $question->delete();
+        return response()->json($question); 
+
+  } 
 }
 

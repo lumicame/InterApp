@@ -58,36 +58,48 @@
   <!-- fin del popup -->
 
    <!-- popup para agregar una pregunta -->
-<div class="ui small modal" id="add_question">
+<div class="ui large modal" id="add_question">
     <i class="close icon"></i>
 <div class="ui inverted dimmer">
-    <div class="ui large text loader">Agregando...</div>
+    <div class="ui large text loader">Guardando...</div>
   </div>
 <div class="header">Agregar Pregunta</div>
     <div class="scrolling content">
       <form class="ui form" method="post" id="form_add_question">
-        <h4 class="ui dividing header">agregar descripcion de la pregunta</h4>
+        <input type="hidden" name="id_dba" id="id_dba">
+        <h4 class="ui dividing header">Agregar descripción de la pregunta</h4>
         <div class="field">
-           <textarea id="text_pregunta" placeholder="Descripción de la pregunta"> </textarea>
+           <textarea id="text_pregunta" name="text_pregunta" style="height: 200px" placeholder="Descripción de la pregunta"> </textarea>
           </div>
             <div class="field">
               <label>A</label>
-          <input type="text" name="inicio_edit" id="inicio_edit" placeholder="(ejm: 7:45)">
-          </div>
+              <textarea name="answer_a" id="answer_a" placeholder="Descripción de la respuesta A" rows="2" style="min-height: 58px"></textarea>
+            </div>
            <div class="field">
                <label>B</label>
-          <input type="text" name="inicio_edit" id="inicio_edit" placeholder="(ejm: 7:45)">
+               <textarea name="answer_b" id="answer_b" placeholder="Descripción de la respuesta B" rows="2" style="min-height: 58px"></textarea>
            </div>
             <div class="field">
               <label>C</label>
-          <input type="text" name="inicio_edit" id="inicio_edit" placeholder="(ejm: 7:45)">
+              <textarea name="answer_c" id="answer_c" placeholder="Descripción de la respuesta C" rows="2" style="min-height: 58px"></textarea>
           </div>
            <div class="field">
                <label>D</label>
-          <input type="text" name="inicio_edit" id="inicio_edit" placeholder="(ejm: 7:45)">
+               <textarea name="answer_d" id="answer_d" placeholder="Descripción de la respuesta D" rows="2" style="min-height: 58px"></textarea>
+           </div>
+           <div class="field">
+             <label>Selecciona la respuesta correcta</label>
+             <select class="required" style="width: auto;" id="answer_correct" name="answer_correct">
+               <option value="">Selecciona una respuesta</option>
+               <option value="A">A</option>
+               <option value="B">B</option>
+               <option value="C">C</option>
+               <option value="D">D</option>
+
+             </select>
            </div>
        
-        <button class="ui button green right floated" style="margin-bottom: 10px" id="add_pregunta">Agregar</button>
+        <button class="ui button green right floated" style="margin-bottom: 10px" id="add_pregunta">Guardar</button>
       </form>
     </div>
 </div>

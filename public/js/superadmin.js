@@ -1,24 +1,41 @@
 
 
 // eventos para mostrar los popups
+//activar modal para agregar datos
 $(document).on('click','.ui.green.button.add',function () {
     $('#add_popup').modal("show");    
 });
+//activar modal para agregar una pregunta
 $(document).on('click','.ui.button.add_question',function () {
+  $('#id_dba').val($(this).data("id"));
    $('#add_question').modal("show");    
 });
+//activar modal para editar datos
 $(document).on('click','.ui.button.editar',function () {
    cargar($(this).data("id"));
    $('#edit_popup').modal("show");    
 });
+//activar modal para editar preguntas
+$(document).on('click','.ui.button.editar_question',function () {
+   cargar_question($(this).data("id"));
+   $('#edit_popup').modal("show");    
+});
+//activar modal para editar dbas
 $(document).on('click','.ui.button.editar_dba',function () {
    cargar_dba($(this).data("id"));
    $('#edit_popup').modal("show");    
 });
-
+//activar modal para eliminar datos
 $(document).on('click','.ui.button.eliminar',function () {
     $('#id_delete').val($(this).data("id"));
     $('#delete_popup').modal("show");    
+});
+
+$('#subject_search').on('change', function() {
+  filtrar();
+});
+$('#grade_search').on('change', function() {
+  filtrar();
 });
 //evento para agregar una nueva instituciòn
     $('#form_add').validate({
@@ -255,44 +272,140 @@ $(document).on('click','.ui.button.eliminar',function () {
         });
     });
     //Agregar un nuevo DBA
+
+//Agregar una pregunta al dba    
   $('#form_add_question').validate({
       rules: {
-        text_pregunta: { required: true, minlength: 2},
+        text_pregunta: { required: true, minlength: 10},
+        answer_a:{required: true, minlength:1},
+        answer_b:{required: true, minlength:1},
+        answer_c:{required: true, minlength:1},
+        answer_d:{required: true, minlength:1},
+
     },
     messages: {
-        text_pregunta:"Escribe el nombre del DBA (min:3 caracteres)",
+        text_pregunta:"mas informacion sobre la pregunta",
+        answer_a:"Ingrese la Respuesta A",
+        answer_b:"Ingrese la Respuesta B",
+        answer_c:"Ingrese la Respuesta C",
+        answer_d:"Ingrese la Respuesta D",
+        answer_correct:"Selecciona una respuesta correcta"
     },
     submitHandler: function(form){
-
-        alert($('#text_pregunta').val());
-    /*  $.ajax({
+        $('.ui.inverted.dimmer').addClass("active");
+      $.ajax({
         type: 'POST',
-        url: 'dba',
+        url: 'dba/question',
         data: {
             '_token': $('input[name=_token]').val(),
-            'name_add': $('#name_add').val(),
-            'subject_add':$('#subject_add').val(),
-            'grade_add':$('#grade_add').val(),
+            'id_dba':$('#id_dba').val(),
+            'text_pregunta': $('#text_pregunta').val(),
+            'answer_a':$('#answer_a').val(),
+            'answer_b':$('#answer_b').val(),
+            'answer_c':$('#answer_c').val(),
+            'answer_d':$('#answer_d').val(),
+            'answer_correct':$('#answer_correct').val(),
         },success: function(data) {
-            $('#name_add').val("");
-          $('#subject_add').prop('selectedIndex', 0);
-            $('#grade_add').prop('selectedIndex', 0);
+            $('.trumbowyg-editor').html("");
+            $('#text_pregunta').val("");
+            $('#answer_a').val("");
+            $('#answer_b').val("");
+            $('#answer_c').val("");
+            $('#answer_d').val("");
+            $('#answer_correct').prop('selectedIndex', 0);
                     $('.ui.inverted.dimmer').removeClass("active");   
-  $('#add_popup').modal("hide");
-            $('#table_content').append(data.data);   
-
-            $('#item'+data.id).addClass("positive"); 
-            setTimeout(function() {
-              $('#item'+data.id).removeClass("positive"); 
-
-          },6000);          
-            var count= parseInt($('#count_text').html());
-            count=count+1;
-            $('#count_text').html(count);
+                    $('#add_popup').modal("hide");
+            $('#item'+$('#id_dba').val()+' .count').html(data.count);
         },
-    });*/
+    });
     }
     });
+
+//Editar una pregunta
+ $('#form_edit_question').validate({
+      rules: {
+        text_pregunta: { required: true, minlength: 10},
+        answer_a:{required: true, minlength:1},
+        answer_b:{required: true, minlength:1},
+        answer_c:{required: true, minlength:1},
+        answer_d:{required: true, minlength:1},
+
+    },
+    messages: {
+        text_pregunta:"mas informacion sobre la pregunta",
+        answer_a:"Ingrese la Respuesta A",
+        answer_b:"Ingrese la Respuesta B",
+        answer_c:"Ingrese la Respuesta C",
+        answer_d:"Ingrese la Respuesta D",
+        answer_correct:"Selecciona una respuesta correcta"
+    },
+    submitHandler: function(form){
+        $('.ui.inverted.dimmer').addClass("active");
+      $.ajax({
+        type: 'POST',
+        url: 'question/'+$('#id_edit').val()+'/edit',
+        data: {
+            '_token': $('input[name=_token]').val(),
+            'text_pregunta': $('#text_pregunta').val(),
+            'answer_a':$('#answer_a').val(),
+            'answer_b':$('#answer_b').val(),
+            'answer_c':$('#answer_c').val(),
+            'answer_d':$('#answer_d').val(),
+            'answer_correct':$('#answer_correct').val(),
+        },success: function(data) {
+            $('.trumbowyg-editor').html("");
+            $('#text_pregunta').val("");
+            $('#answer_a').val("");
+            $('#answer_b').val("");
+            $('#answer_c').val("");
+            $('#answer_d').val("");
+            $('#answer_correct').prop('selectedIndex', 0);
+                    $('.ui.inverted.dimmer').removeClass("active");   
+                    $('#edit_popup').modal("hide");
+                    $('#item'+data.id).replaceWith(data.data);
+        },
+    });
+    }
+    });
+
+//Eliminar una pregunta
+  $('#eliminar_question').on('click',function () {
+        $('.ui.inverted.dimmer').addClass("active");
+
+        $.ajax({
+            type: 'POST',
+            url: 'question/'+$('#id_delete').val()+'/delete',
+            data: {
+                '_token': $('input[name=_token]').val()
+            },success: function(data) {
+                $('#item'+data.id).addClass("negative");
+            $('.ui.inverted.dimmer').removeClass("active");   
+
+                $('#delete_popup').modal("hide");
+                setTimeout(function() {
+                  $('#item'+data.id).fadeOut( "slow", function() {
+                      $('#item'+data.id).remove();
+                  });
+              }, 1000);
+            },
+        });
+    });
+
+//Filtrar por materia y grado
+function filtrar() {
+  $.ajax({
+        type: 'POST',
+        url: 'question/search',
+        data: {
+                '_token': $('input[name=_token]').val(),
+                'subject':$('#subject_search').val(),
+                'grade':$('#grade_search').val(),
+            },
+        success: function(data) {
+          $('#content_item').html(data.data);
+        },
+    }); 
+}
 
 function cargar(id) {
    $.ajax({
@@ -317,4 +430,19 @@ function cargar_dba(id) {
         },
     }); 
 }
+function cargar_question(id) {
+   $.ajax({
+        type: 'GET',
+        url: 'question/'+id,
+        success: function(data) {
+                $('#id_edit').val(data.id); 
+                $('#text_pregunta').trumbowyg("html", data.question);
+            $('#answer_a').trumbowyg("html", data.a);
+            $('#answer_b').trumbowyg("html", data.b);
+            $('#answer_c').trumbowyg("html", data.c);
+            $('#answer_d').trumbowyg("html", data.d);
+        },
+    }); 
+}
+
 

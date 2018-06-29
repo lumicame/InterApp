@@ -2,7 +2,7 @@
       <td class="name">{{$dba->name}}</td>
       <td class="grade">{{$dba->grade->name}}</td>
       <td class="subject">{{$dba->subject->name}}</td>
-      <td>5</td>
+      <td class="count">{{$dba->questions->count()}}</td>
       <td>
       	<center><div class="ui small icon buttons">
         <button class="ui button green add_question" data-id="{{$dba->id}}"><i class="plus icon"></i>Agregar pregunta</button>

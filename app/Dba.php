@@ -14,4 +14,8 @@ class Dba extends Model
     {
          return $this->belongsTo('App\Grade');
     }
+     function questions()
+    {
+    	return $this->hasMany('App\Question');
+    }
 }
