@@ -76,13 +76,6 @@ Route::middleware(['auth'])->group(function()
 		Route::post('/admin/asingcourse/{id}/edit', 'AdminController@AsingCourseUpdate')->name('admin.asingcourse.update');
 		Route::post('/admin/asingcourse/{id}/delete', 'AdminController@AsingCourseDelete')->name('admin.asingcourse.delete');
 
-		//Rutas para ver, agregar, editar y eliminar los cursos de las clases
-		Route::get('/admin/subject', 'AdminController@SubjectIndex')->name('admin.subject.index');	
-		Route::get('/admin/subject/{id}', 'AdminController@SubjectShow')->name('admin.subject.show');
-		Route::post('/admin/subject', 'AdminController@SubjectSave')->name('admin.subject.save');
-		Route::post('/admin/subject/{id}/edit', 'AdminController@SubjectUpdate')->name('admin.subject.update');
-		Route::post('/admin/subject/{id}/delete', 'AdminController@SubjectDelete')->name('admin.subject.delete');
-
 	/*Rutas como coordinador*/	
 
 		//Rutas para ver, agregar, editar y eliminar Docentes
@@ -98,6 +91,15 @@ Route::middleware(['auth'])->group(function()
 		//Rutas para ver, agregar, editar y eliminar Estudiantes
 		Route::get('/teacher/clases', 'TeacherController@ClassIndex')->name('teacher.class.index');			
 		Route::get('/teacher/clases/{id}', 'TeacherController@ClassStudentIndex')->name('teacher.class.student.index');	
+		Route::post('/teacher/clases/evaluation', 'TeacherController@EvaluationSave');
+		Route::get('/teacher/clases/evaluation/{id}', 'TeacherController@EvaluationShow');	
+		Route::post('/teacher/clases/evaluation/{id}/activar', 'TeacherController@EvaluationActivar');
+		Route::post('/teacher/clases/evaluation/{id}/edit', 'TeacherController@EvaluationUpdate');
+		Route::post('/teacher/clases/evaluation/{id}/delete', 'TeacherController@EvaluationDelete');
+		Route::post('/teacher/clases/evaluation/question', 'TeacherController@EvaluationQuestionSave');
+		
+		
+
 		Route::get('/teacher/grupos', 'TeacherController@GroupIndex')->name('teacher.group.index');
 		Route::get('/teacher/grupos/{id}/estudiantes', 'TeacherController@GroupStudentIndex')->name('teacher.group.student.index');
 

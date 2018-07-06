@@ -6,7 +6,7 @@
       @if($class->director()->first())
         <td>{{$class->director()->first()->name." - ".$class->director()->first()->username}}</td>
       @else
-      <td>Por asignado</td>
+      <td>Por asignar</td>
       @endif
       <td>{{$class->users()->count()}}</td>
       <td class="quota">{{$class->quota}}</td>

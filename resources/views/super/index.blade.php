@@ -62,5 +62,5 @@
 <meta name="_token" content="{{ csrf_token() }}"/>
 @endsection
 @section('script')
-<script src="{{asset('js/superadmin.js')}}"></script>
+<script src="{{asset('js/superadmin/superadmin.js')}}"></script>
 @endsection

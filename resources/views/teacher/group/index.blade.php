@@ -16,11 +16,19 @@
 
 @section('content')
  <div class="ui six doubling cards">
-      
-      @foreach($classrooms as $classroom)
-       @include('teacher.group.card')
-       @endforeach
+      @if($classrooms->count()>0)
+     	 	@foreach($classrooms as $classroom)
+       			@include('teacher.group.card')
+       		@endforeach
    </div>
+    @else
+   </div>
+<center style="
+    /* margin-left: 50%; */
+    margin-top: 20%;
+    /* position:  absolute; */
+"><h1>No tienes cursos a tu cargo</h1></center>
+@endif
 
 <meta name="_token" content="{{ csrf_token() }}"/>
 @endsection

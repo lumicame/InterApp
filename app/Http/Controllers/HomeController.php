@@ -246,9 +246,9 @@ class HomeController extends Controller
         }
         if ($view=="") {
             $view="<br><br><h1>No se encontraron preguntas</h1>";
-            return response()->json(['data'=>$view]);
+            return response()->json(['data'=>$view,'count'=>$questions->count()]);
         }
-        return response()->json(['data'=>$view]);
+        return response()->json(['data'=>$view,'count'=>$questions->count()]);
     }
 public function QuestionUpdate($id,Request $request)
 {

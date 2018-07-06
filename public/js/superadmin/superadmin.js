@@ -403,6 +403,7 @@ function filtrar() {
                 'grade':$('#grade_search').val(),
             },
         success: function(data) {
+          $('#count_preguntas').html(data.count);
           $('#cargando').removeClass("active");   
           $('#content_item').html(data.data);
         },

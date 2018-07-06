@@ -49,9 +49,7 @@ class AdminController extends Controller
     {
         $request->user()->authorizeRoles(['admin']);
         $school=School::find($request->user()->school->id);
-        $roles=Role::where('name','student')->first();
-        $classrooms=$school->classrooms;
-        $students = User::where([['role_id', '=', $roles->id],['school_id', '=', $request->user()->school->id]])->get();
+        $classrooms=$school->classrooms()->orderBy('grade_id')->get();
         return view('admin.student.index', compact('classrooms')); 
     }
     //pantalla para agregar, editar y eliminar a los docentes
@@ -75,7 +73,6 @@ class AdminController extends Controller
         $school=School::find($data->user()->school->id);
         $array=$data->all();
         $array['pass']=str_random(8);
-        $count=User::all()->count();
         $user =new User();
         $user->name = $data->firstname." ".$data->secondname;
         $user->first_name=$data->firstname;
@@ -140,7 +137,7 @@ class AdminController extends Controller
     {
         $request->user()->authorizeRoles(['admin']);
         $school=School::find($request->user()->school->id);
-        $classroom=$school->classrooms;
+        $classroom=$school->classrooms()->orderBy('grade_id')->get();
         return view('admin.classroom.index', compact('classroom')); 
     }
     //pantalla para buscar a un salon de clases
@@ -194,7 +191,7 @@ class AdminController extends Controller
     {
           $request->user()->authorizeRoles(['admin']);
         $school=School::find($request->user()->school->id);
-        $classrooms=$school->classrooms;
+        $classrooms=$school->classrooms()->orderBy('grade_id')->get();
         return view('admin.asingcourse.index', compact('classrooms')); 
     }
     //pantalla para agregar una asignacion de materias

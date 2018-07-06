@@ -20,9 +20,7 @@ class CoordinatorController extends Controller
     {
         $request->user()->authorizeRoles(['coordinator']);
         $school=School::find($request->user()->school->id);
-        $roles=Role::where('name','student')->first();
-        $classrooms=$school->classrooms;
-        $students = User::where([['role_id', '=', $roles->id],['school_id', '=', $request->user()->school->id]])->get();
+        $classrooms=$school->classrooms()->orderBy('grade_id')->get();
         return view('coordinator.student.index', compact('classrooms')); 
     }
     public function TeacherIndex(Request $request)

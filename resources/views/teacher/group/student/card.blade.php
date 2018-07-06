@@ -3,6 +3,6 @@
       <img src="{{asset('images/default.jpg')}}">
     </div>
     <div class="extra">
-     {{$student->name}}
+     {{$student->second_name." ".$student->first_name}}
     </div>
   </div>

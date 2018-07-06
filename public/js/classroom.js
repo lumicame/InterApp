@@ -11,19 +11,17 @@ $(document).on('click','.ui.button.eliminar',function () {
     $('#delete_popup').modal("show");    
 });
 
-
 //evento para agregar un nuevo usuario
 $('#form_add').validate({
   rules: {
     class: { required: true, minlength: 2},
     classroom: { required: true, minlength: 2},
-    jornada: { required:true},
     quota: { required:true}
 },
 messages: {
     class: "Debe introducir un nombre. (ejm: Primero A)",
     classroom: "Debe introducir el numero del aula. (ejm: 101)",
-    jornada : "Debe introducir una jornada. (ejm: AM)",
+    jornada : "Debe seleccionar una jornada. (ejm: AM)",
     grade_add:"Selecciona un grado° para este salon de clases",
     user_add:"Selecciona un director de grupo",
     quota:"Digite un cupo maximo para este salon"
@@ -46,7 +44,7 @@ submitHandler: function(form){
 
         $('#class').val("");
         $('#classroom').val("");
-        $('#jornada').val("");
+        $('#jornada').prop('selectedIndex', 0);
         $('#grade_add').prop('selectedIndex', 0);
         $('#user_add').prop('selectedIndex', 0);
         $('#quota').val("");
@@ -73,13 +71,12 @@ $('#form_edit').validate({
   rules: {
     class_edit: { required: true, minlength: 2},
     classroom_edit: { required: true, minlength: 2},
-    jornada_edit: { required:true},
     quota_edit:{ required:true}
 },
 messages: {
     class_edit: "Debe introducir un nombre. (ejm: Primero A)",
     classroom_edit: "Debe introducir el numero del aula. (ejm: 101)",
-    jornada_edit: "Debe introducir una jornada. (ejm: AM)",
+    jornada_edit: "Debe seleccionar una jornada. (ejm: AM)",
     grade_edit:"Selecciona un grado° para este salon de clases",
     quota_edit:"Digite un cupo maximo para este salon"
 

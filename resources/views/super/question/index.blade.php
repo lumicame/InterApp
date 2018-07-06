@@ -28,6 +28,8 @@
 <div class="ui segment">
   <div style="width: 100%">
  <h1 class="ui header" style="float: left;">Banco de preguntas</h1>
+ <br>
+ <h5 style="float: left;position: absolute;">Resultados: (<span id="count_preguntas">{{$questions->count()}}</span>)</h5>
    <form class="ui form" style="float: right;width: auto;" >
      <div class="two fields" >
       <div class="field">
@@ -59,6 +61,9 @@
   </div>
  
 <div class="row" >
+   <div class="ui inverted dimmer" id="cargando">
+    <div class="ui large text loader">Cargando...</div>
+  </div>
   <div class="ui items" id="content_item">
     @include('super.question.questions')
 </div>
@@ -171,5 +176,5 @@
 });
 
 </script>
-<script src="{{asset('js/superadmin.js')}}"></script>
+<script src="{{asset('js/superadmin/superadmin.js')}}"></script>
 @endsection

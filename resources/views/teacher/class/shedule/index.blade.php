@@ -1,18 +1,18 @@
 @extends('layouts.layout')
+
 @section('title')
-
-
 <h4 id="title_materia" class="header item">
- DBA
+ {{Auth::user()->school->name}}
      </h4>
-    
 @endsection
+
+
 @section('StyleNav')
 <style type="text/css">
-  .ui.mini.vertical.menu{
-    margin-top: 70px;
-  }
+.ui.mini.vertical.menu{margin-top: 70px;}
 </style>
+
+@include('teacher.style')
 <link rel="stylesheet" href="{{asset('Trumbowyg/dist/ui/trumbowyg.min.css')}}"/>
 
   <script type="text/javascript" src="{{asset('Trumbowyg/dist/trumbowyg.min.js')}}"></script> 
@@ -23,52 +23,52 @@
 @endsection
 
 @section('slider')
- @include('super.slider')
+ @include('teacher.slider')
 @endsection
-@section('content')
-    <div class="ui segment">
- <h1 class="ui header">DBAS</h1>
-<div class="row" >
-  <table class="ui blue small selectable celled table" id="table_content" >
-    <thead>
-      <tr >
-      	<th>Nombre</th>
-        <th>Grado°</th>
-        <th>Materia</th>
-        <th>Tolal Preguntas</th>
-        <th>Acción</th>
-      </tr>
-    </thead>
-    <tbody>
-     @foreach($dbas as $dba)
-    @include('super.dba.dba')
-    @endforeach
-  </tbody>
-  <tfoot>
-    <tr>
-    	<th colspan="8">Total DBAS: <span id="count_text">{{$dbas->count()}}</span></th>
-    	</tr>
-      
-  </tfoot>
-</table>
-</div>
-</div>
-        <input type="hidden" id="tipo" value="coordinator">
 
-<button class="circular ui icon large green fixed button add" id="" style="position: fixed;
-    right: 20px;
-    bottom: 50px;">
+@section('content')
+<h4>{{$shedule->classroom->class." ".$shedule->classroom->classroom." - ".$shedule->subject->name}}<h4>
+	<div class="ui pointing secondary menu">
+  <a class="item active" data-tab="first">Alumnos</a>
+  <a class="item" data-tab="second">Reportes</a>
+  <a class="item" data-tab="third">Evaluaciones</a>
+</div>
+
+<div class="ui bottom attached tab segment active" data-tab="first" style="min-height: 400px">
+  <div class="ui six doubling cards" >
+      
+      @foreach($shedule->classroom->users()->orderBy('second_name')->get() as $student)
+       @include('teacher.group.student.card')
+       @endforeach
+     
+   </div>
+</div>
+<div class="ui bottom attached tab segment" data-tab="second" style="min-height: 400px">
+  Second
+</div>
+<div class="ui bottom attached tab segment" data-tab="third" style="min-height: 400px">
+
+    <div class="ui four doubling cards" id="contenedor_evaluaciones"> 
+    @if($shedule->evaluations->count()>0)  
+    @foreach($shedule->evaluations as $evaluation)
+     @include('teacher.class.shedule.evaluation.card')
+     @endforeach
+     @else
+         
+    @endif
+    </div>
+ 
+  <button class="circular ui icon large green fixed button add" style="position: fixed;right: 20px;bottom: 50px;">
   <i class="icon plus"></i>
 </button>
-<!-- popup para agregar a un usuario -->
-@include('super.dba.modals')
+</div>
+ @include('teacher.class.shedule.evaluation.modals')
 
 <meta name="_token" content="{{ csrf_token() }}"/>
-                
 @endsection
 @section('script')
 <script type="text/javascript">
-      $('#text_pregunta').trumbowyg({
+  $('#text_pregunta').trumbowyg({
     btns: [
         ['undo', 'redo'], // Only supported in Blink browsers
         ['formatting'],
@@ -82,12 +82,9 @@
         ['unorderedList', 'orderedList'],
         ['horizontalRule'],
         ['removeformat'],
-        ['fullscreen'],
-        
-                   
-                ]
-});
-      $('#answer_a').trumbowyg({
+        ['fullscreen']]
+      });
+  $('#answer_a').trumbowyg({
     btns: [
         ['undo', 'redo'], // Only supported in Blink browsers
         ['formatting'],
@@ -101,12 +98,9 @@
         ['unorderedList', 'orderedList'],
         ['horizontalRule'],
         ['removeformat'],
-        ['fullscreen'],
-        
-                   
-                ]
-});
-      $('#answer_b').trumbowyg({
+        ['fullscreen']]
+      });
+  $('#answer_b').trumbowyg({
     btns: [
         ['undo', 'redo'], // Only supported in Blink browsers
         ['formatting'],
@@ -120,12 +114,9 @@
         ['unorderedList', 'orderedList'],
         ['horizontalRule'],
         ['removeformat'],
-        ['fullscreen'],
-        
-                   
-                ]
-});
-      $('#answer_c').trumbowyg({
+        ['fullscreen']]
+      });
+  $('#answer_c').trumbowyg({
     btns: [
         ['undo', 'redo'], // Only supported in Blink browsers
         ['formatting'],
@@ -139,12 +130,9 @@
         ['unorderedList', 'orderedList'],
         ['horizontalRule'],
         ['removeformat'],
-        ['fullscreen'],
-        
-                   
-                ]
-});
-      $('#answer_d').trumbowyg({
+        ['fullscreen']]
+      });
+  $('#answer_d').trumbowyg({
     btns: [
         ['undo', 'redo'], // Only supported in Blink browsers
         ['formatting'],
@@ -158,12 +146,8 @@
         ['unorderedList', 'orderedList'],
         ['horizontalRule'],
         ['removeformat'],
-        ['fullscreen'],
-        
-                   
-                ]
-});
-
+        ['fullscreen']]
+      });
 </script>
-<script src="{{asset('js/superadmin/superadmin.js')}}"></script>
+<script src="{{asset('js/teacher/teacher.js')}}"></script>
 @endsection

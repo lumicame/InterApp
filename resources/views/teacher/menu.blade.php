@@ -5,7 +5,7 @@
     <div class="content">
     <div class="header" style="color: #fff;font-size: 20px">Mis Clases</div>
     <div class="description" style="color: #fff;font-style: italic;font-size: 16px">
-        Mira todas las clases que das.
+        Aquie encontraras todas las clases que das.
     </div>
     </div>
   </a>

@@ -21,6 +21,8 @@ class CreateQuestionsTable extends Migration
             $table->string('c');
             $table->string('d');
             $table->string('correct');
+            $table->integer('evaluation_id')->unsigned()->nullable();
+            $table->foreign('evaluation_id')->references('id')->on('evaluations')->onDelete('cascade');
             $table->integer('dba_id')->unsigned()->nullable();
             $table->foreign('dba_id')->references('id')->on('dbas')->onDelete('cascade');
             $table->integer('subject_id')->unsigned()->nullable();

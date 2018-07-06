@@ -15,13 +15,20 @@
 @endsection
 
 @section('content')
- <div class="ui six doubling cards">
-      
+<div class="ui six doubling cards">
+@if($shedules->count()>0)
       @foreach($shedules as $shedule)
        @include('teacher.class.card')
        @endforeach
    </div>
-
+   @else
+   </div>
+<center style="
+    /* margin-left: 50%; */
+    margin-top: 20%;
+    /* position:  absolute; */
+"><h1>No tienes clases asignadas</h1></center>
+@endif
 <meta name="_token" content="{{ csrf_token() }}"/>
 @endsection
 @section('script')

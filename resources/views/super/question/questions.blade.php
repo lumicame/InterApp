@@ -2,7 +2,7 @@
   <div id="item{{$question->id}}" class="item" style="background: #1726900d;padding: 10px;border-radius: 5px">
     <div class="content">
       <div class="header" style="width: 100%"><span style="float: left;">{!!$question->question!!}</span>
-        <h3 style="float: right;">{{$question->dba->subject->name." - ".$question->dba->grade->name}}</h3></div>
+        <h3 style="float: right;margin-top: 0px">{{$question->dba->subject->name." - ".$question->dba->grade->name}}</h3></div>
       <div class="description">
         <ol type="A">
           <li>{!!$question->a!!}</li>

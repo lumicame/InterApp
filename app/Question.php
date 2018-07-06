@@ -10,4 +10,8 @@ class Question extends Model
     {
          return $this->belongsTo('App\Dba');
     }
+    public function evaluation()
+    {
+         return $this->belongsTo('App\Evaluation');
+    }
 }

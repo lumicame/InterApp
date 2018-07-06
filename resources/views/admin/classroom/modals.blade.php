@@ -26,7 +26,11 @@
             </div>
             <div class="field">
               <label>Jornada</label>
-              <input type="text" id="jornada" name="jornada" placeholder="Jornada (ejm: AM)">
+              <select class="required" name="jornada" id="jornada">
+            <option value="">Selecciona una jornada</option>  
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
             </div>
             <div class="field">
               <label>Total de cupos</label>
@@ -85,7 +89,11 @@
             </div>
             <div class="field">
               <label>Jornada</label>
-              <input type="text" id="jornada_edit" name="jornada_edit" placeholder="Jornada (ejm: AM)">
+              <select class="required" name="jornada_edit" id="jornada_edit">
+              <option value="">Selecciona una jornada</option>  
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+          </select>
             </div>
             <div class="field">
               <label>Total de cupos</label>

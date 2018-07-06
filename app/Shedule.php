@@ -22,5 +22,9 @@ class Shedule extends Model
     {
          return $this->belongsTo('App\Subject');
     }
+    public function evaluations()
+    {
+         return $this->hasMany('App\Evaluation');
+    }
      
 }
