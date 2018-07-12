@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
- <div class="ui six doubling cards">
+ <div class="ui five doubling cards">
       @if($classrooms->count()>0)
      	 	@foreach($classrooms as $classroom)
        			@include('teacher.group.card')

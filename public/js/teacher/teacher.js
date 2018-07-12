@@ -184,10 +184,11 @@ function cargar_evaluation(id) {
 			'_token': $('input[name=_token]').val(),
 		},success: function(data) {
 			d=new Date(data.finish);
-			$('#content_item').html(data.questions);
+
 			$('#id_edit').val(data.evaluation_id);
 			$('#name_edit').val(data.name);
 			$('#date_edit').val(d.getFullYear()+"-"+zeroPadded(d.getMonth() + 1)+"-"+zeroPadded(d.getDate())+"T"+d.getHours()+":"+zeroPadded(d.getMinutes()));
+			$('#content_item_preguntas').html(data.questions);
 			$('.ui.inverted.dimmer').removeClass("active");
 
 		},

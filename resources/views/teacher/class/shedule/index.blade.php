@@ -8,9 +8,6 @@
 
 
 @section('StyleNav')
-<style type="text/css">
-.ui.mini.vertical.menu{margin-top: 70px;}
-</style>
 
 @include('teacher.style')
 <link rel="stylesheet" href="{{asset('Trumbowyg/dist/ui/trumbowyg.min.css')}}"/>
@@ -27,15 +24,16 @@
 @endsection
 
 @section('content')
+<div class="ui segment container">
 <h4>{{$shedule->classroom->class." ".$shedule->classroom->classroom." - ".$shedule->subject->name}}<h4>
-	<div class="ui pointing secondary menu">
+  <div class="ui pointing secondary menu">
   <a class="item active" data-tab="first">Alumnos</a>
   <a class="item" data-tab="second">Reportes</a>
   <a class="item" data-tab="third">Evaluaciones</a>
 </div>
 
 <div class="ui bottom attached tab segment active" data-tab="first" style="min-height: 400px">
-  <div class="ui six doubling cards" >
+  <div class="ui four doubling cards" >
       
       @foreach($shedule->classroom->users()->orderBy('second_name')->get() as $student)
        @include('teacher.group.student.card')
@@ -48,7 +46,7 @@
 </div>
 <div class="ui bottom attached tab segment" data-tab="third" style="min-height: 400px">
 
-    <div class="ui four doubling cards" id="contenedor_evaluaciones"> 
+    <div class="ui three doubling cards" id="contenedor_evaluaciones"> 
     @if($shedule->evaluations->count()>0)  
     @foreach($shedule->evaluations as $evaluation)
      @include('teacher.class.shedule.evaluation.card')
@@ -61,6 +59,8 @@
   <button class="circular ui icon large green fixed button add" style="position: fixed;right: 20px;bottom: 50px;">
   <i class="icon plus"></i>
 </button>
+</div>
+  
 </div>
  @include('teacher.class.shedule.evaluation.modals')
 

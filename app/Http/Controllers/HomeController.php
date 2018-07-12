@@ -8,8 +8,10 @@ use App\User;
 use App\Subject;
 use App\Dba;
 use App\Question;
+use App\Profile;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 
 class HomeController extends Controller
@@ -88,6 +90,7 @@ class HomeController extends Controller
         $school->phone=$data->number_add;
         $school->save();
         $user =new User();
+        $profile=new Profile();
         $user->name = $data->first_name_admin_add." ".$data->second_name_admin_add;
         $user->first_name=$data->first_name_admin_add;
         $user->second_name=$data->second_name_admin_add;
@@ -99,6 +102,7 @@ class HomeController extends Controller
         $user->save();
         $user->roles()->attach($role);
         $school->users()->save($user);
+        $user->profile()->save($profile);
             $array['name']=$data->firstname." ".$data->secondname;
             $array['codigo']=$user->username;
          Mail::send('emails.school', $array, function($message) use ($data) {
@@ -273,5 +277,102 @@ public function QuestionUpdate($id,Request $request)
         return response()->json($question); 
 
   } 
+  public function ProfileIndex( Request $request)
+  {
+     $request->user()->authorizeRoles(['teacher', 'admin','parent','student','coordinator','super']);
+
+        if ($request->user()->hasRole('admin'))
+        {
+           return view('admin.profile.index');
+        }
+
+        else if($request->user()->hasRole('teacher'))
+        {          
+            return view('teacher.profile.index');
+        }
+
+        elseif ($request->user()->hasRole('parent'))
+        {
+            return view('parent.profile.index');
+        } 
+
+        elseif ($request->user()->hasRole('student')) 
+        {
+            return view('student.profile.index');
+        }
+
+        elseif ($request->user()->hasRole('coordinator')) 
+        {
+            return view('coordinator.profile.index');
+        }
+        
+  }
+  public function ProfileUpdate(Request $request)
+    {
+        $request->user()->authorizeRoles(['admin','teacher','coordinator','student','parent']);
+        switch ($request->tipo) {
+            case 'name':
+            $request->user()->first_name=$request->first_name;
+                $request->user()->second_name=$request->second_name;
+                $request->user()->name=$request->first_name." ".$request->second_name;
+                $request->user()->save();
+                return response()->json( $request->user());
+                break;
+            case 'number':
+                $request->user()->profile->phone=$request->number;
+                $request->user()->profile->save();
+                return "";
+                break;
+            case 'direction':
+                $request->user()->profile->direction=$request->direction;
+                $request->user()->profile->save();
+                return "";
+                break;
+            case 'description':
+                $request->user()->profile->description=$request->description;
+                $request->user()->profile->save();
+                return "";
+                break;
+            case 'password':
+                $request->user()->password=bcrypt($request->password);
+                $request->user()->save();
+                return "";
+                break;
+            case 'photo':
+            if($request->file('photo')){
+                $file = $request->file('photo');
+                \Storage::disk('logo')->delete($request->user()->profile->avatar);
+                $nombre =time() ."_". $file->getClientOriginalName();
+                $path = public_path('logo/'.$nombre);
+               // \Storage::disk('logo')->put($nombre,  \File::get($file));
+                Image::make($file)->fit(150, 150)->save($path);
+                $request->user()->profile->avatar=$nombre;
+                 $request->user()->profile->save();
+                 $request->user()->profile->avatar=$request->user()->profile->getLogoUrl().'?'.uniqid();
+                 return response()->json( $request->user()->profile);
+            }
+                 
+                break;
+                case 'portada':
+            if($request->file('photo')){
+                $file = $request->file('photo');
+                \Storage::disk('portada')->delete($request->user()->profile->portada);
+                $nombre =time() ."_". $file->getClientOriginalName();
+               // $path = public_path('portada/'.$nombre);
+               \Storage::disk('portada')->put($nombre,  \File::get($file));
+                $request->user()->profile->portada=$nombre; 
+                $request->user()->profile->save();
+                $request->user()->profile->portada=$request->user()->profile->getPortadaUrl().'?'.uniqid();
+                return response()->json( $request->user()->profile);
+            }
+                 
+                break;
+                
+            default:
+                break;
+        }
+       
+        return "";
+    }
 }
 

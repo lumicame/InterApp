@@ -15,7 +15,7 @@
 @endsection
 
 @section('content')
-<div class="ui six doubling cards">
+<div class="ui five doubling cards">
 @if($shedules->count()>0)
       @foreach($shedules as $shedule)
        @include('teacher.class.card')

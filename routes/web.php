@@ -69,6 +69,7 @@ Route::middleware(['auth'])->group(function()
 		Route::post('/admin/classroom', 'AdminController@ClassroomSave')->name('admin.classroom.save');
 		Route::post('/admin/classroom/{id}/edit', 'AdminController@ClassroomUpdate')->name('admin.classroom.update');
 		Route::post('/admin/classroom/{id}/delete', 'AdminController@ClassroomDelete')->name('admin.classroom.delete');
+		Route::post('/admin/classroom/delete', 'AdminController@ClassroomDeleteDirector');
 
 		//Rutas para ver, agregar, editar y eliminar los cursos de las clases
 		Route::get('/admin/asingcourse', 'AdminController@AsingCourseIndex')->name('admin.asingcourse.index');	
@@ -76,8 +77,19 @@ Route::middleware(['auth'])->group(function()
 		Route::post('/admin/asingcourse/{id}/edit', 'AdminController@AsingCourseUpdate')->name('admin.asingcourse.update');
 		Route::post('/admin/asingcourse/{id}/delete', 'AdminController@AsingCourseDelete')->name('admin.asingcourse.delete');
 
-	/*Rutas como coordinador*/	
+		//Rutas para la configuracion de la institucion
+		Route::get('/admin/config', 'AdminController@ConfigIndex')->name('admin.config.index');	
+		Route::post('/admin/config/school/{id}', 'AdminController@ConfigSchoolUpdate');
 
+		
+
+
+	/*Rutas como coordinador*/	
+//Rutas para ver, agregar, editar y eliminar Coordinadores, profesores
+		Route::get('/coordinator/user/{id}', 'AdminController@UserShow')->name('admin.user.show');
+		Route::post('/coordinator/user', 'AdminController@UserSave')->name('admin.user.save');
+		Route::post('/coordinator/user/{id}/edit', 'AdminController@UserUpdate')->name('admin.user.update');
+		Route::post('/coordinator/user/{id}/delete', 'AdminController@UserDelete')->name('admin.user.delete');
 		//Rutas para ver, agregar, editar y eliminar Docentes
 		Route::get('/coordinator/teacher', 'CoordinatorController@TeacherIndex')->name('coordinator.teacher.index');			
 		//Rutas para ver, agregar, editar y eliminar Estudiantes
@@ -85,9 +97,15 @@ Route::middleware(['auth'])->group(function()
 		//Rutas para ver, agregar, editar y eliminar Horarios
 		Route::get('/coordinator/asingcourse', 'CoordinatorController@AsingCourseIndex')->name('coordinator.asingcourse.index');	
 		Route::get('/coordinator/classroom', 'CoordinatorController@ClassRoomIndex')->name('coordinator.classroom.index');
+		Route::get('/coordinator/classroom/{id}', 'AdminController@ClassroomShow');
+		Route::post('/coordinator/classroom', 'AdminController@ClassroomSave');
+		Route::post('/coordinator/classroom/{id}/edit', 'AdminController@ClassroomUpdate');
+		Route::post('/coordinator/classroom/{id}/delete', 'AdminController@ClassroomDelete');
+		Route::post('/coordinator/classroom/delete', 'AdminController@ClassroomDeleteDirector');
 
+		//Rutas para la configuracion de su cuenta
+		Route::get('/teacher/config', 'CoordinatorController@ConfigIndex')->name('coordinator.config.index');	
 	/*Rutas como profesor*/
-
 		//Rutas para ver, agregar, editar y eliminar Estudiantes
 		Route::get('/teacher/clases', 'TeacherController@ClassIndex')->name('teacher.class.index');			
 		Route::get('/teacher/clases/{id}', 'TeacherController@ClassStudentIndex')->name('teacher.class.student.index');	
@@ -97,12 +115,17 @@ Route::middleware(['auth'])->group(function()
 		Route::post('/teacher/clases/evaluation/{id}/edit', 'TeacherController@EvaluationUpdate');
 		Route::post('/teacher/clases/evaluation/{id}/delete', 'TeacherController@EvaluationDelete');
 		Route::post('/teacher/clases/evaluation/question', 'TeacherController@EvaluationQuestionSave');
+		//Rutas para la configuracion de su cuenta
+		Route::get('/teacher/config', 'TeacherController@ConfigIndex')->name('teacher.config.index');	
+		Route::post('/teacher/config/profile', 'HomeController@ProfileUpdate');
 		
 		
 
 		Route::get('/teacher/grupos', 'TeacherController@GroupIndex')->name('teacher.group.index');
 		Route::get('/teacher/grupos/{id}/estudiantes', 'TeacherController@GroupStudentIndex')->name('teacher.group.student.index');
 
+Route::get('/user/profile', 'HomeController@ProfileIndex')->name('user.profile.index');
+Route::post('/user/config/profile', 'HomeController@ProfileUpdate');
 
 });
 

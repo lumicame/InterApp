@@ -42,10 +42,20 @@ return [
     */
 
     'disks' => [
-
-        'local' => [
+        'portada'=>[
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' =>  public_path().'/portada'
+
+        ],
+
+        'logo' => [
+            'driver' => 'local',
+            'root' =>  public_path().'/logo',
+        ],
+
+        'archivo' => [
+            'driver' => 'local',
+            'root' =>  public_path().'/archivo',
         ],
 
         'public' => [

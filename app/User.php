@@ -83,6 +83,12 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Classroom');
     }
 
-
+public function profile()
+    {
+    
+        return $this->hasOne('App\Profile');
+    
+    }
+    
 
 }

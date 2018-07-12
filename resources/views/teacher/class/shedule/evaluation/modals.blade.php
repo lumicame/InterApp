@@ -93,7 +93,7 @@
 <!-- tab #2 -->
 <div class="ui bottom attached tab" data-tab="second_modal">
 
-    <div class="ui items" id="content_item">
+    <div class="ui items" id="content_item_preguntas">
     </div>
 </div>
 

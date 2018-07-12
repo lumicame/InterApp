@@ -11,6 +11,21 @@ $(document).on('click','.ui.button.eliminar',function () {
     $('#delete_popup').modal("show");    
 });
 
+$(document).on('click','#eliminar_director',function () {
+    $('#eliminar_director').addClass('loading');
+       $.ajax({
+    type: 'POST',
+    url: 'classroom/delete',
+    data: {
+        '_token': $('input[name=_token]').val(),
+        'id': $('#id_edit').val()
+    },success: function(data) {
+           $('#eliminar_director').removeClass('loading');
+            $('#item'+data.id+' .director').html('Por asignar');
+    },
+});
+});
+
 //evento para agregar un nuevo usuario
 $('#form_add').validate({
   rules: {
@@ -93,13 +108,22 @@ submitHandler: function(form){
             'classroom_edit':$('#classroom_edit').val(),
             'jornada_edit':$('#jornada_edit').val(),
             'grade':$('#grade_edit').val(),
-            'quota':$('#quota_edit').val()
+            'quota':$('#quota_edit').val(),
+            'user':$('#user_edit').val()
         },success: function(data) {
           $('#item'+data.id+' .class').html(data.class);
           $('#item'+data.id+' .classroom').html(data.classroom);
           $('#item'+data.id+' .jornada').html(data.jornada);
           $('#item'+data.id+' .grade').html(data.grade_edit);
           $('#item'+data.id+' .quota').html(data.quota);
+          if ($('#item'+data.id+' .director').html()=="Por asignar") {
+            $('#item'+data.id+' .director').html(data.user);
+          }
+          else{
+            $('#item'+data.id+' .director').append("<br>"+data.user);
+          }
+
+          $('#user_edit').prop('selectedIndex', 0);
         $('.ui.inverted.dimmer').removeClass("active");
 
 

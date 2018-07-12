@@ -20,5 +20,19 @@ class School extends Model
 	{
 		return $this->hasMany('App\Subject');
 	}
+	public function getLogoUrl()
+{
+    if ($this->logo)
+        return asset('logo/'.$this->logo);
+
+    return asset('logo/default.jpg');
+}
+public function getPortadaUrl()
+{
+    if ($this->portada)
+        return asset('portada/'.$this->portada);
+
+    return asset('portada/default.jpg');
+}
 	
 }

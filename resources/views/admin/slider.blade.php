@@ -17,7 +17,7 @@
   </a>
   <a class="item" >
     Mensajes
-  </a>
-  <a class="item" >
+ 
+  <a class="item" href="{{route('admin.config.index')}}">
     Configuración
   </a>

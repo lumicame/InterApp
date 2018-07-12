@@ -5,9 +5,9 @@ border-radius: inherit;padding-left: 2%;padding-right: 2%;background: #355c7d; /
   background: -webkit-linear-gradient(to right, #355c7d, #6c5b7b, #c06c84);
   background: linear-gradient(to right, #355c7d, #6c5b7b, #c06c84)
       }
-      .ui.left.demo.vertical.inverted.sidebar.labeled.icon.menu{
-        background: #355c7d; /* fallback for old browsers */
+      /*.ui.left.demo.vertical.inverted.sidebar.labeled.icon.menu{
+        background: #355c7d; fallback for old browsers 
   background: -webkit-linear-gradient(to top, #355c7d, #6c5b7b, #c06c84);
   background: linear-gradient(to top, #355c7d, #6c5b7b, #c06c84)
-      }
+      }*/
     </style>

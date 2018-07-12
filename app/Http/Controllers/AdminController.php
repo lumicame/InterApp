@@ -9,8 +9,10 @@ use App\Classroom;
 use App\Subject;
 use App\Date;
 use App\Shedule;
+use App\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Intervention\Image\Facades\Image;
 
 class AdminController extends Controller
 {
@@ -71,9 +73,12 @@ class AdminController extends Controller
     public function UserSave(Request $data)
     {
         $school=School::find($data->user()->school->id);
-        $array=$data->all();
+        $correo=User::where('email',$data->email)->first();
+        if ($correo==null) {
+           $array=$data->all();
         $array['pass']=str_random(8);
         $user =new User();
+        $profile=new Profile();
         $user->name = $data->firstname." ".$data->secondname;
         $user->first_name=$data->firstname;
         $user->second_name=$data->secondname;
@@ -86,6 +91,7 @@ class AdminController extends Controller
                     $role_coordinator=Role::where('name','coordinator')->first();
                    $user->roles()->attach($role_coordinator);
                     $user->role_id=$role_coordinator->id;
+
                     break;
                 case 'student':
                     $role_student=Role::where('name','student')->first();
@@ -103,6 +109,7 @@ class AdminController extends Controller
                     # code...
                     break;
             }
+            $user->profile()->save($profile);
             $user->save();
             $school->users()->save($user);
             $array['name']=$data->firstname." ".$data->secondname;
@@ -111,7 +118,11 @@ class AdminController extends Controller
             Mail::send('emails.confirmation_code', $array, function($message) use ($data) {
             $message->to($data->email, $data->name)->subject('Datos para iniciar sesión en la plataforma virtual InterApp');});
             $view = view('admin.recursos.user')->with('user',$user)->render();
-            return response()->json(['data'=>$view,'id'=>"".$user->id]);
+            return response()->json(['data'=>$view,'id'=>"".$user->id,'estado'=>'ok']);
+        }else{
+         return response()->json(['estado'=>'error']);
+        }
+        
     }
     //pantalla para editar a un usuario
     public function UserUpdate(Request $request, $id)
@@ -128,6 +139,7 @@ class AdminController extends Controller
     public function UserDelete($id)
     {
         $user=User::find($id);
+        $user->profile->deletefotos();
         $user->delete();
         return response()->json($user);
           
@@ -149,7 +161,7 @@ class AdminController extends Controller
     //pantalla para guardar un salon de clases
     public function ClassroomSave(Request $request)
     {
-        $request->user()->authorizeRoles(['admin']);
+        $request->user()->authorizeRoles(['admin','coordinator']);
         $user =User::find($request->user);
         $school=School::find($request->user()->school->id);
         $classroom =new Classroom();
@@ -167,7 +179,8 @@ class AdminController extends Controller
     //pantalla para editar un salon de clases
     public function ClassroomUpdate(Request $request,$id)
     {
-        $request->user()->authorizeRoles(['admin']);
+        $request->user()->authorizeRoles(['admin','coordinator']);
+        
         $classroom= Classroom::find($id); 
         $classroom->class = $request->class_edit;
         $classroom->classroom=$request->classroom_edit;
@@ -175,16 +188,32 @@ class AdminController extends Controller
         $classroom->grade_id=$request->grade;
         $classroom->quota=$request->quota;
         $classroom->save();
+        if($request->user){
+            $user =User::find($request->user);
+            $classroom->director()->attach($user);
+            $classroom->user=$user->name." - ".$user->username;
+        }
+       
         $classroom->grade_edit=$classroom->grade->name;
         return response()->json($classroom);
     }    
     //pantalla para eliminar un salon de clases
     public function ClassroomDelete($id,Request $request)
     {
-        $request->user()->authorizeRoles(['admin']);
+        $request->user()->authorizeRoles(['admin','coordinator']);
          $class= Classroom::find($id);
          $class->delete();
         return response()->json($class);
+    }
+    //
+    public function ClassroomDeleteDirector(Request $request)
+    {
+        $classroom= Classroom::find($request->id);
+        $users=$classroom->director;
+        foreach ($users as $user) {
+            $classroom->director()->detach($user->id);
+        }
+        return response()->json($classroom);
     }
     //pantalla para agregar, editar o eliminar una asignacion de materias
     public function AsingCourseIndex(Request $request)
@@ -271,6 +300,62 @@ class AdminController extends Controller
          $subject= Subject::find($id);
          $subject->delete();
         return response()->json($subject);
+    }
+    public function ConfigIndex(Request $request)
+    {
+        $request->user()->authorizeRoles(['admin']);
+        $school=School::find($request->user()->school->id);
+        return view('admin.config.index', compact('school'));
+
+    }
+    public function ConfigSchoolUpdate(Request $request,$id)
+    {
+        $request->user()->authorizeRoles(['admin']);
+        $school=School::find($id);
+        switch ($request->tipo) {
+            case 'name':
+                $school->name=$request->name;
+                break;
+            case 'number':
+                $school->phone=$request->number;
+                break;
+            case 'direction':
+                $school->direction=$request->direction;
+                break;
+            case 'description':
+                $school->description=$request->description;
+                break;
+            case 'photo':
+            if($request->file('photo')){
+                $file = $request->file('photo');
+                \Storage::disk('logo')->delete($school->logo);
+                $nombre =time() ."_". $file->getClientOriginalName();
+                $path = public_path('logo/'.$nombre);
+               // \Storage::disk('logo')->put($nombre,  \File::get($file));
+                Image::make($file)->fit(150, 150)->save($path);
+                $school->logo=$nombre; 
+            }
+                 
+                break;
+                case 'portada':
+            if($request->file('photo')){
+                $file = $request->file('photo');
+                \Storage::disk('portada')->delete($school->portada);
+                $nombre =time() ."_". $file->getClientOriginalName();
+               // $path = public_path('portada/'.$nombre);
+               \Storage::disk('portada')->put($nombre,  \File::get($file));
+                $school->portada=$nombre; 
+            }
+                 
+                break;
+                
+            default:
+                break;
+        }
+        $school->save();
+        $school->logo=$school->getLogoUrl().'?'.uniqid();
+        $school->portada=$school->getPortadaUrl().'?'.uniqid();
+        return response()->json($school);
     }
 
 }

@@ -65,7 +65,7 @@
     <div class="content">
 
       <form class="ui form" method="post" id="form_edit">
-        <input type="hidden" value="" id="id_edit">
+        
         <h4 class="ui dividing header">Informacion del salon</h4>
      
           
@@ -99,8 +99,21 @@
               <label>Total de cupos</label>
               <input type="number" id="quota_edit" name="quota_edit" placeholder="(ejm: 30)">
             </div>
+            <div class="field">
+          <label>Agrega un director a este grupo</label>
+      <select id="user_edit" name="user_edit">
+    <option value="">Selecciona un profesor</option>
+    @foreach($teachers as $teacher)
+    <option value="{{$teacher->id}}">{{$teacher->name." - ".$teacher->username}}</option>
+    @endforeach
+    </select>
+        </div>
+
         <button class="ui button blue right floated" style="margin-bottom: 10px" id="editar">Editar</button>
+<input type="hidden" value="" id="id_edit">
       </form>
+
+        <button class="ui button red" style="margin-bottom: 10px" id="eliminar_director">Eliminar Directores</button>
     </div>
 </div>
   <!-- fin del popup -->

@@ -25,8 +25,7 @@
 @endsection
 @section('content')
     
-<div class="ui segment">
-  <div style="width: 100%">
+<div class="ui unstackable segment">
  <h1 class="ui header" style="float: left;">Banco de preguntas</h1>
  <br>
  <h5 style="float: left;position: absolute;">Resultados: (<span id="count_preguntas">{{$questions->count()}}</span>)</h5>
@@ -57,8 +56,7 @@
         </div>
         
    </form> 
-     
-  </div>
+  
  
 <div class="row" >
    <div class="ui inverted dimmer" id="cargando">

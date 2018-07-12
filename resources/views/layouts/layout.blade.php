@@ -42,13 +42,14 @@ and open the template in the editor.
       .error {color: red !important;
     background-color: #91a4bf1a;
     }
-      body{height: auto;background:  rgb(245, 245, 243)}
+      body{height:auto;overflow: auto;background:  rgb(245, 245, 243);min-width: 700px}
     </style>
     @yield('StyleNav')
     
-    <body>
+    <body >
         <div class="ui top fixed inverted menu" >
-          
+          <div id="title_materia" onclick="myFunction()" style="cursor: pointer" class="item">
+    <i class="bars icon" style="font-size: 28px"></i> </div>
  <div class="item" style="font-size: 18px">
     INTERAPP
   </div>
@@ -102,11 +103,11 @@ and open the template in the editor.
 </div>
 </div>
    <div class="ui dropdown item">
-    <img class="ui avatar image" src="https://semantic-ui.com/images/wireframe/square-image.png">
+    <img class="ui avatar image" src="{{auth()->user()->profile->getLogoUrl().'?'.uniqid() }}">
     <span>{{ Auth::user()->name }}</span>
     <i class="dropdown icon"></i>
     <div class="menu">
-      <a class="item">Configurar Pérfil</a>
+      <a class="item"  href="{{route('user.profile.index')}}">Configurar Pérfil</a>
       <a class="item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Salir</a>
     </div>
@@ -115,12 +116,15 @@ and open the template in the editor.
   </div>
 </div>
 
-        <div class="ui mini vertical menu" style="margin-left: 5px;position: fixed;">
+        <div class="ui left demo vertical inverted sidebar labeled icon menu">
   <a class="item" href="{{ url('/') }}" id="title_materia">
     <i class="home icon"></i>
     Inicio
   </a>
   @yield('slider')
+   <a class="item" href="{{route('user.profile.index')}}">
+    Mi cuenta
+  </a>
   <a class="item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
     <i class="sign out alternate icon"></i>
@@ -131,7 +135,7 @@ and open the template in the editor.
                                         @csrf
                                     </form>
         <div style="margin-top: 70px">
-          <div class="container" style="margin-right: 1%;margin-left: 140px">
+          <div class="ui container">
 
         @yield('content')
 </div>
@@ -139,7 +143,8 @@ and open the template in the editor.
     </body>
     <script>
         function myFunction() {
-    $('.ui.labeled.icon.sidebar').sidebar('toggle');}
+    $('.ui.labeled.icon.sidebar').sidebar('toggle');
+  }
     
     $('.ui.dropdown').dropdown();
      $('.custom').popup({popup : $('.custom.popup'),on    : 'click'});

@@ -39,9 +39,18 @@ submitHandler: function(form){
         'secondname':$('#second_name_add').val(),
         'email':$('#email_add').val()
     },success: function(data) {
-
-        $('#first_name_add').val("");
-        $('#second_name_add').val("");
+      if (data.estado=="error") {
+        $('.ui.inverted.dimmer').removeClass("active"); 
+             $('#email_add').val("");
+$.uiAlert({
+textHead: 'Registro fallido',
+text: 'Este correo electronico ya esta en uso, prueba con otro',
+ bgcolor: '#da1515',
+  textcolor: '#fff',
+   position: 'top-right',
+    icon: 'checkmark box',
+     time: 3,});
+      }else{
         $('#email_add').val("");
         $('#table_content').append(data.data);
         $('.ui.inverted.dimmer').removeClass("active");   
@@ -53,7 +62,9 @@ text: 'Se ha enviado un email con los datos de ingreso a la plataforma al usuari
   textcolor: '#fff',
    position: 'top-right',
     icon: 'checkmark box',
-     time: 3,});
+     time: 4,});
+        $('#first_name_add').val("");
+        $('#second_name_add').val("");
         $('#item'+data.id).addClass("positive"); 
         setTimeout(function() {
           $('#item'+data.id).removeClass("positive"); 
@@ -62,6 +73,8 @@ text: 'Se ha enviado un email con los datos de ingreso a la plataforma al usuari
         var count= parseInt($('#count_text').html());
         count=count+1;
         $('#count_text').html(count);
+      }
+        
     },
 });
 }

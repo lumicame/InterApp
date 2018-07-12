@@ -29,7 +29,7 @@
     <div class="ui segment">
  <h1 class="ui header">DBAS</h1>
 <div class="row" >
-  <table class="ui blue small selectable celled table" id="table_content" >
+  <table class="ui unstackable blue small selectable celled table" id="table_content" >
     <thead>
       <tr >
       	<th>Nombre</th>

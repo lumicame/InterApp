@@ -4,9 +4,14 @@
       <td class="grade">{{$class->grade->name}}</td>
       <td class="jornada">{{$class->jornada}}</td>
       @if($class->director()->first())
-        <td>{{$class->director()->first()->name." - ".$class->director()->first()->username}}</td>
+        <td class="director">
+          @foreach($class->director as $director)
+          {{$director->name." - ".$director->username}}
+          <br>
+          @endforeach
+          </td>
       @else
-      <td>Por asignar</td>
+      <td class="director">Por asignar</td>
       @endif
       <td>{{$class->users()->count()}}</td>
       <td class="quota">{{$class->quota}}</td>

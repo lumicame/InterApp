@@ -39,6 +39,9 @@ class TeacherController extends Controller
     {
       $request->user()->authorizeRoles(['teacher']);
       $classroom=$request->user()->group->find($id);
+      if(!$classroom){
+      return response()->view('errors.404', [], 404);
+      }
       $students=$classroom->users()->orderBy('second_name')->get();
       $students->class=$classroom->class." ".$classroom->classroom;
       return view('teacher.group.student.index', compact('students')); 
@@ -47,7 +50,7 @@ class TeacherController extends Controller
     public function ClassStudentIndex($id,Request $request)
     {
       $request->user()->authorizeRoles(['teacher']);
-      $shedule=$request->user()->shedules->find($id);
+      $shedule=$request->user()->shedules->find($id)->firstOrFail();
       return view('teacher.class.shedule.index', compact('shedule')); 
     }
 
@@ -128,4 +131,11 @@ class TeacherController extends Controller
     $question->save();
     return response()->json($question); 
   }
+  public function ConfigIndex(Request $request)
+    {
+        $request->user()->authorizeRoles(['teacher']);
+        return view('teacher.config.index');
+
+    }
+    
 }

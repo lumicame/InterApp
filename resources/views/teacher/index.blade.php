@@ -14,7 +14,7 @@
  @include('teacher.slider')
 @endsection
 @section('content')
-    <div class="ui six doubling cards">
+    <div class="ui five doubling cards">
       
 
        @include('teacher.menu')
